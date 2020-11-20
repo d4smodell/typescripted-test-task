@@ -1,4 +1,5 @@
 import { Alert } from "antd";
+import { useSelector } from "react-redux";
 import './AuthForm.css'
 
 export const AlertWrapper = () => {
@@ -7,7 +8,7 @@ export const AlertWrapper = () => {
     };
     return <div className={'AlertWrapper'}>
       <Alert
-        message="Неверный логин или пароль"
+        message={"Неверный логин или пароль"}
         description="Пожалуйста проверьте правильность введенных данных и повторите попытку"
         type="error"
         closable

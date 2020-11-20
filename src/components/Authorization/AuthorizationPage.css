@@ -5,7 +5,7 @@ html, body {margin: 0; height: 100%; overflow: hidden}
 .authorization {
     display: flex;
     justify-content: space-between;
-    max-width: 1200px;
+    max-width: 1500px;
     margin: 0 auto;
     margin-top: 300px;
 }

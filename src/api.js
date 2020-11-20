@@ -5,7 +5,6 @@ const instance = Axios.create({
     headers: {
         withCredentials: true,
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.setItem('access', { access: "", refresh: "" })}`
     }
 })
 
@@ -20,36 +19,35 @@ export const authAPI = {
     }
 }
 
-// const errorHandler = (error) => {
-//     if (error?.response?.status === 401) {
-//         instance
-//             .post(
-//                 'api/users/token/refresh/',
-//                 {
-//                     refresh: localStorage.getItem('refresh'),
-//                 },
-//                 {
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                         Accept: 'application/json',
-//                     },
-//                 }
-//             )
-//         .then((response) => {
-//           localStorage.setItem('access', response.data.access);
-//           error.config.Authorization = `Bearer ${localStorage.getItem('access')}`;
-//           securedAxiosInstance(error);
-//         })
-//         .catch((error) => {
-//           doAuthCleanup();
-//           sessionStorage.setItem('redirect_to', window.location);
-//           window.location = '/guest';
-//           return Promise.reject(error);
-//         });
-//     }
-//     else {
-//         return Promise.reject(error)
-//     }
-// };
+export const errorHandler = (error) => {
+    if (error?.status === 401) {
+        instance
+            .post(
+                'api/users/token/refresh/',
+                {
+                    refresh: localStorage.getItem('refresh'),
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Accept: 'application/json',
+                    },
+                }
+            )
+        .then((response) => {
+          localStorage.setItem('access', response.data.access);
+          error.config.Authorization = `Bearer ${localStorage.getItem('access')}`;
+          instance(error);
+        })
+        .catch((error) => {
+          sessionStorage.setItem('redirect_to', '/');
+          window.location = '/guest';
+          return Promise.reject(error);
+        });
+    }
+    else {
+        return Promise.reject(error)
+    }
+};
 
 // T54321oikb

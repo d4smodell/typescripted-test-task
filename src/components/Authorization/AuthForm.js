@@ -2,8 +2,11 @@ import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { connect, useSelector } from "react-redux";
 import { login } from "../../context/reducers/authReducer";
-import { Alert } from "antd";
 import { useState } from "react";
+import './AuthForm.css'
+import { AlertWrapper } from "./Alert";
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { ButtonWrapper } from "./Button";
 
 const LoginForm = (props) => {
   const isAuth = useSelector(state => state.login.isAuth);
@@ -19,12 +22,9 @@ const LoginForm = (props) => {
     }
   };
 
-  const onClose = (e) => {
-    console.log(e, "I was closed.");
-  };
-
-  return (
-    <>
+  const FormWrapper = () => {
+    return <div className={'FormWrapper'}>
+      <h2>Вход</h2>
       <Form
         name="normal_login"
         className="login-form"
@@ -56,32 +56,26 @@ const LoginForm = (props) => {
             },
           ]}
         >
-          <Input
+          <Input.Password
             prefix={<LockOutlined className="site-form-item-icon" />}
             type="password"
             placeholder="Введите пароль"
+            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
           />
         </Form.Item>
 
         <Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            className="login-form-button"
-          >
-            Войти
-          </Button>
+          <ButtonWrapper />
         </Form.Item>
-        {alert ? (
-          <Alert
-            message="Неверный логин или пароль"
-            description="Пожалуйста проверьте правильность введенных данных и повторите попытку"
-            type="error"
-            closable
-            onClose={onClose}
-          />
-        ) : null}
+        {alert ? <AlertWrapper /> : null}
       </Form>
+    </div>
+  }
+
+  return (
+    <>
+      <FormWrapper />
+
     </>
   );
 };

@@ -20,4 +20,36 @@ export const authAPI = {
     }
 }
 
+// const errorHandler = (error) => {
+//     if (error?.response?.status === 401) {
+//         instance
+//             .post(
+//                 'api/users/token/refresh/',
+//                 {
+//                     refresh: localStorage.getItem('refresh'),
+//                 },
+//                 {
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         Accept: 'application/json',
+//                     },
+//                 }
+//             )
+//         .then((response) => {
+//           localStorage.setItem('access', response.data.access);
+//           error.config.Authorization = `Bearer ${localStorage.getItem('access')}`;
+//           securedAxiosInstance(error);
+//         })
+//         .catch((error) => {
+//           doAuthCleanup();
+//           sessionStorage.setItem('redirect_to', window.location);
+//           window.location = '/guest';
+//           return Promise.reject(error);
+//         });
+//     }
+//     else {
+//         return Promise.reject(error)
+//     }
+// };
+
 // T54321oikb

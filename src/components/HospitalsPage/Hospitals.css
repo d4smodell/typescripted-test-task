@@ -1,0 +1,20 @@
+body {
+    background-color: #F0F2F5;
+}
+
+.hospitals__header {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+}
+
+.button_wrapper  {
+    padding: 10px;
+}
+
+.button_wrapper span{
+    border-radius: 20px;
+    padding: 10px;
+    display: inline;
+    font-size: 18px;
+} 

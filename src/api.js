@@ -16,6 +16,12 @@ export const authAPI = {
         localStorage.setItem('access', access);
         localStorage.setItem('username', username);
         return response;
+    },
+
+    logout() {
+        localStorage.clear('access')
+        localStorage.clear('refresh')
+        localStorage.clear('username')
     }
 }
 

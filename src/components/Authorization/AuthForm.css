@@ -46,7 +46,7 @@
 }
 
 .Preview {
-    margin-top: 70px;
+    margin-top: 10px;
     display: flex;
     margin-left: 250px;
     font-size: 12px;
@@ -57,6 +57,5 @@
 }
 
 .Preview img {
-    margin-top: 14px;
     padding-right: 10px;
 }

@@ -1,0 +1,19 @@
+.card_container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    flex-wrap: wrap;
+}
+
+.card div {
+    border-radius: 16px;
+}
+
+.plus_min {
+    display: flex;
+    justify-content: space-between;
+}
+
+.progress_bar {
+    margin-top: 20px;
+}

@@ -4,21 +4,12 @@ import { connect } from "react-redux";
 import { Header } from "./Header/Header";
 import { HospitalsLocation } from "./HospitalsLocation/HospitalsLocation";
 import { PlacesInfo } from "./PlacesInfo/PlacesInfo";
-import { InfoCircleOutlined } from '@ant-design/icons';
+
 import "./Content.css";
-import { Button } from 'antd';
 
-const PatientsButton = props => {
-  return <div className={'patients_button'}>
-    <Button size={'large'} type="primary">{props.title}</Button>
-  </div>
-}
+import { ModalButtons } from "./ModalButtons/ModalButtons";
+import { SortedPlaces } from "./SortedPlaces/SortedPlaces";
 
-const PatientsButtonInfo = props => {
-  return <div className={'patients_button'}>
-    <Button size={'large'} type="primary"><InfoCircleOutlined />{props.title}</Button>
-  </div>
-}
 
 const Hospitals = (props) => {
   return (
@@ -27,14 +18,8 @@ const Hospitals = (props) => {
       <div className="container">
         <HospitalsLocation />
         <PlacesInfo />
-        <div className={"patients_container"}>
-        <div className={"patients_actions"}>
-        <PatientsButton title={'Изменить число мест'}/>
-        <PatientsButton title={'Перевести пациентов'}/>
-        <PatientsButton title={'Выписать пациентов'}/>
-        <PatientsButtonInfo title={`Места в других отделениях`}/>
-        </div>
-        </div>
+        <ModalButtons />
+        <SortedPlaces />
       </div>
     </>
   );

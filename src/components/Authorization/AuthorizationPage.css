@@ -1,6 +1,6 @@
 @import 'antd/dist/antd.css';
 
-html, body {margin: 0; height: 100%; overflow: hidden}
+body {margin: 0; height: 100%; overflow: hidden}
 
 .authorization {
     display: flex;

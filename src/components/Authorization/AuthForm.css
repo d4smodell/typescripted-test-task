@@ -53,13 +53,12 @@
 }
 
 .Preview h1 {
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .Preview p {
     font-size: 18px;
     color: #858080;
-    font-weight: 600;
 }
 
 .Preview img {

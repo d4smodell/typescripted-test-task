@@ -1,3 +1,51 @@
 .container {
-    max-width: 1500px;
+    max-width: 2000px;
+    margin: 0 auto;
+    padding: 0 20px 0 20px;
+}
+
+.info_els {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 120px;
+}
+
+.info_els a {
+    font-size: 18px;
+}
+
+.hospital_choice {
+    font-size: 24px;
+}
+
+.hospital__location p {
+    font-size: 18px;
+}
+
+.hospital_places span {
+    color: #1890FF;
+}
+
+.patients_container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.patients_actions {
+    margin-top: 64px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.patients_button button {
+    margin: 20px 20px 0 0;
+    border-radius: 8px;
+    min-width: 122px;
+    max-height: 40px;
+}
+
+.patients_button span {
+    display: inline;
+    padding: 5px;
+    font-size: 18px;
 }

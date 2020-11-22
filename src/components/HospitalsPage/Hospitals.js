@@ -2,48 +2,39 @@ import React from "react";
 import { logout } from "../../context/reducers/authReducer";
 import { connect } from "react-redux";
 import { Header } from "./Header/Header";
-import { Menu, Dropdown } from "antd";
-import { DownOutlined } from "@ant-design/icons";
+import { HospitalsLocation } from "./HospitalsLocation/HospitalsLocation";
+import { PlacesInfo } from "./PlacesInfo/PlacesInfo";
+import { InfoCircleOutlined } from '@ant-design/icons';
 import "./Content.css";
+import { Button } from 'antd';
 
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="http://www.alipay.com/"
-      >
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="http://www.taobao.com/"
-      >
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item>
-      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
-        3rd menu item
-      </a>
-    </Menu.Item>
-  </Menu>
-);
+const PatientsButton = props => {
+  return <div className={'patients_button'}>
+    <Button size={'large'} type="primary">{props.title}</Button>
+  </div>
+}
+
+const PatientsButtonInfo = props => {
+  return <div className={'patients_button'}>
+    <Button size={'large'} type="primary"><InfoCircleOutlined />{props.title}</Button>
+  </div>
+}
 
 const Hospitals = (props) => {
   return (
     <>
       <Header logout={props.logout} />
-      <div className={"container"}>
-        <Dropdown overlay={menu}>
-          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-            Стационарное Отделение <DownOutlined />
-          </a>
-        </Dropdown>
+      <div className="container">
+        <HospitalsLocation />
+        <PlacesInfo />
+        <div className={"patients_container"}>
+        <div className={"patients_actions"}>
+        <PatientsButton title={'Изменить число мест'}/>
+        <PatientsButton title={'Перевести пациентов'}/>
+        <PatientsButton title={'Выписать пациентов'}/>
+        <PatientsButtonInfo title={`Места в других отделениях`}/>
+        </div>
+        </div>
       </div>
     </>
   );

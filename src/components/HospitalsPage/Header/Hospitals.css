@@ -1,0 +1,40 @@
+body {
+    background: #F0F2F5;
+}
+
+.hospitals__container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 2000px;
+    margin: 0 auto;
+    height: 100px;
+}
+
+.hospitals__header {
+    background-color: #fff;
+}
+
+.HospitalsLogoutButtonWrapper button {
+    margin: 20px 20px 0 0;
+    border-radius: 8px;
+    min-width: 122px;
+    max-height: 40px;
+}
+
+.HospitalsLogoutButtonWrapper span {
+    display: inline;
+    padding-bottom: 5px;
+}
+
+.HospitalsLogoutButtonWrapper button:hover {
+    opacity: .5
+}
+
+.Preview {
+    margin: 20px 0 0 20px;
+}
+
+
+.Info p {
+    color: #858080;
+}

@@ -1,37 +1,56 @@
 import React from "react";
-import emblem from "../Images/emblem_tyumen.png";
-import { Button } from "antd";
-import "./Hospitals.css";
 import { logout } from "../../context/reducers/authReducer";
 import { connect } from "react-redux";
+import { Header } from "./Header/Header";
+import { Menu, Dropdown } from "antd";
+import { DownOutlined } from "@ant-design/icons";
+import "./Content.css";
 
-const ButtonWrapper = props => {
-    return <div className="button_wrapper">
-      <Button type="primary" danger onClick={props.logout}>
-        Primary
-      </Button>
-    </div>
-}
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="http://www.alipay.com/"
+      >
+        1st menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href="http://www.taobao.com/"
+      >
+        2nd menu item
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">
+        3rd menu item
+      </a>
+    </Menu.Item>
+  </Menu>
+);
 
 const Hospitals = (props) => {
   return (
-    <div className={"hospitals__header"}>
-      <div className={"Preview"}>
-        <div>
-          <img src={emblem} alt="" />
-        </div>
-        <div>
-          <h1>Информационная система “Коечный фонд - бронирование”</h1>
-          <p>Департамент информатизации Тюменской области</p>
-        </div>
+    <>
+      <Header logout={props.logout} />
+      <div className={"container"}>
+        <Dropdown overlay={menu}>
+          <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
+            Стационарное Отделение <DownOutlined />
+          </a>
+        </Dropdown>
       </div>
-    <ButtonWrapper logout={props.logout}/>
-    </div>
+    </>
   );
 };
 
 const mapDispatchToProps = {
-    logout
-}
+  logout,
+};
 
-export default connect(null, mapDispatchToProps)(Hospitals)
+export default connect(null, mapDispatchToProps)(Hospitals);

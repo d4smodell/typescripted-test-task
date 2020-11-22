@@ -52,10 +52,16 @@
     font-size: 12px;
 }
 
+.Preview h1 {
+    font-weight: 600;
+}
+
 .Preview p {
     font-size: 18px;
+    color: #858080;
+    font-weight: 600;
 }
 
 .Preview img {
-    padding-right: 10px;
+    padding: 10px 10px;
 }

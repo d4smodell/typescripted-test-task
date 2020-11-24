@@ -1,5 +1,5 @@
 import { CLEAR_USER_DATA, ERROR_CATCHER, SET_USER_DATA } from "../types";
-import { authAPI, errorHandler } from "../../api";
+import { authAPI, errorHandler } from "../../api/api";
 
 const initialState = {
   username: null,

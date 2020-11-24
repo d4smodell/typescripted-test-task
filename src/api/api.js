@@ -38,6 +38,49 @@ export const additionInfoAPI = {
     }
 }
 
+export const departmentsAPI = {
+    async getDepartments() {
+        try {
+            const response = await instance.get('api/hospitals/departments/', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access')}`
+                }
+            })
+            return response
+        } catch(e) {
+            if(e) throw e
+        }
+    },
+
+    async getSingleDepartment(departmentId) {
+        try {
+            const response = await instance.get(`api/hospitals/departments/${departmentId}/`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access')}`
+                }
+            })
+            return response
+        } catch(e) {
+            if(e) throw e
+        }
+    }
+}
+
+export const bunkReleaseAPI = {
+    async releaseBunk() {
+        try {
+            const response = await instance.post('api/hospitals/bunks/release/', {num: 1}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access')}`
+                }
+            })
+            return response
+        } catch(e) {
+            if(e) throw e
+        }
+    }
+}
+
 export const errorHandler = (error) => {
     if (error?.status === 401) {
         instance

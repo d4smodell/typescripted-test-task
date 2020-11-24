@@ -1,4 +1,4 @@
-import { additionInfoAPI } from '../../api'
+import { additionInfoAPI } from '../../api/api'
 import { GET_ADDITIONAL_INFO } from '../types'
 
 const initialState = {

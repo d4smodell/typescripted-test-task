@@ -1,0 +1,10 @@
+.discharge_modal ~div{
+    border-radius: 8px;
+    height: 500px;
+    font-size: 25px;
+}
+
+.checkbox_field{
+    display: flex;
+    flex-direction: column;
+}

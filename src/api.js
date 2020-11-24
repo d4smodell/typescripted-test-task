@@ -10,18 +10,31 @@ const instance = Axios.create({
 
 export const authAPI = {
     async login(username, password) {
-        const response = await instance.post(`api/users/token/`, { username, password });
-        const { refresh, access } = response?.data;
-        localStorage.setItem('refresh', refresh);
-        localStorage.setItem('access', access);
-        localStorage.setItem('username', username);
-        return response;
+        try {
+            const response = await instance.post(`api/users/token/`, { username, password });
+            const { refresh, access } = response?.data;
+            localStorage.setItem('refresh', refresh);
+            localStorage.setItem('access', access);
+            localStorage.setItem('username', username);
+            return response;
+        } catch (e) {
+            if (e) throw e
+        }
     },
+}
 
-    logout() {
-        localStorage.clear('access')
-        localStorage.clear('refresh')
-        localStorage.clear('username')
+export const additionInfoAPI = {
+    async getAdditionInfo() {
+        try {
+            const response = await instance.get('api/users/addition_info/', {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('access')}`
+                }
+            })
+            return response
+        } catch (e) {
+            if (e) throw e
+        }
     }
 }
 
@@ -40,16 +53,16 @@ export const errorHandler = (error) => {
                     },
                 }
             )
-        .then((response) => {
-          localStorage.setItem('access', response.data.access);
-          error.config.Authorization = `Bearer ${localStorage.getItem('access')}`;
-          instance(error);
-        })
-        .catch((error) => {
-          sessionStorage.setItem('redirect_to', '/');
-          window.location = '/guest';
-          return Promise.reject(error);
-        });
+            .then((response) => {
+                localStorage.setItem('access', response.data.access);
+                error.config.Authorization = `Bearer ${localStorage.getItem('access')}`;
+                instance(error);
+            })
+            .catch((error) => {
+                sessionStorage.setItem('redirect_to', '/');
+                window.location = '/guest';
+                return Promise.reject(error);
+            });
     }
     else {
         return Promise.reject(error)

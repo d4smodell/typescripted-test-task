@@ -10,16 +10,12 @@ import { ButtonWrapper } from "./Button";
 
 const LoginForm = (props) => {
   const isAuth = useSelector(state => state.login.isAuth);
-  const error = useSelector(state => state.login.error)
   const [alert, setAlert] = useState(false);
-console.log(error)
   const onFinish = (payload) => {
     console.log("Received values of form: ", payload);
     props.login(payload.username, payload.password);
-
-    if (!isAuth) {
       setAlert(true);
-    }
+      props.setIsEntered(true)
   };
 
   const FormWrapper = () => {
@@ -70,13 +66,13 @@ console.log(error)
         <Form.Item>
           <p><InfoCircleOutlined />Не можете войти?</p>
           <p>
-          Свяжитесь с технической поддержкой<br/>
+            Свяжитесь с технической поддержкой<br />
           по номеру телефона
           <span className={"phoneNumber"}>72-72-72</span>
           </p>
         </Form.Item>
       </Form>
-      {alert ? <AlertWrapper /> : null}
+      {!isAuth && alert && <AlertWrapper />}
     </div>
   }
 

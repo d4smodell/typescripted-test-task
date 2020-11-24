@@ -2,6 +2,7 @@ import React from "react";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import { Modal } from 'antd';
+import { PatientDischarge } from './PatientDischarge'
 
 const PatientsButton = (props) => {
   const [visible, setVisible] = React.useState(false);
@@ -60,7 +61,7 @@ export const ModalButtons = (props) => {
       <div className={"patients_actions"}>
         <PatientsButton title={"Изменить число мест"} />
         <PatientsButton title={"Перевести пациентов"} />
-        <PatientsButton title={"Выписать пациентов"} />
+        <PatientDischarge title={"Выписать пациентов"} />
         <PatientsButtonInfo title={`Места в других отделениях`} />
       </div>
     </div>

@@ -46,13 +46,13 @@ export const PlacesCount = (props) => {
             <div>
               <div style={{ width: "216px" }}>
                 <label>Всего</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
             <div style={{ width: "216px" }}>
               <div>
                 <label>Занято</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
           </div>
@@ -62,13 +62,13 @@ export const PlacesCount = (props) => {
             <div>
               <div style={{ width: "216px" }}>
                 <label>Всего</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
             <div style={{ width: "216px" }}>
               <div>
                 <label>Занято</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
           </div>
@@ -78,13 +78,13 @@ export const PlacesCount = (props) => {
             <div>
               <div style={{ width: "216px" }}>
                 <label>Всего</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
             <div style={{ width: "216px" }}>
               <div>
                 <label>Занято</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
           </div>
@@ -94,13 +94,13 @@ export const PlacesCount = (props) => {
             <div>
               <div style={{ width: "216px" }}>
                 <label>Всего</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
             <div style={{ width: "216px" }}>
               <div>
                 <label>Занято</label>
-                <Input placeholder="Basic usage" />
+                <Input placeholder="" />
               </div>
             </div>
           </div>

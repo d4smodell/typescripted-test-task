@@ -13,7 +13,7 @@ export const HospitalsLocation = props => {
   const dispatch = useDispatch()
 
   const onClick = ({ key }) => {
-    message.info(`Click on item ${key}`);
+    console.log(`Click on item ${key}`);
     dispatch(getSingleDepartmentThunk(key))
   };
 

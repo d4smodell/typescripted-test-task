@@ -23,5 +23,3 @@ export const getPatient = () => async dispatch => {
     const response = await bunkReleaseAPI.releaseBunk()
     dispatch(bunkReleaseAC(response))
 }
-
-getPatient()

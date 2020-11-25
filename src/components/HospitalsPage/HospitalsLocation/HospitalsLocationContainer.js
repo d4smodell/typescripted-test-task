@@ -4,11 +4,13 @@ import { getDepartmentsThunk } from "../../../context/reducers/departmentsReduce
 import { HospitalsLocation } from "./HospitalsLocation";
 
 export const HospitalsLocationContainer = () => {
-    const departments = useSelector(state => state.departments.departments)
-    console.log(departments)
-    const dispatch = useDispatch()
-    useEffect(() => {
-      dispatch(getDepartmentsThunk())
-    }, [dispatch])
-    return <HospitalsLocation info={departments.data} />
+  const departments = useSelector(state => state.departments.departments)
+  
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(getDepartmentsThunk())
+  }, [dispatch])
+  
+  return <HospitalsLocation info={departments.data} />
 };

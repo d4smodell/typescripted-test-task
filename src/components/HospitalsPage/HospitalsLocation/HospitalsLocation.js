@@ -23,13 +23,7 @@ export const HospitalsLocation = props => {
         {
           props.info.map(item => {
             return <Menu.Item key={item.id}>
-              <a
-                target="_blank"
-                rel="noopener noreferrer"
-                href="/"
-              >
                 {item.name}
-              </a>
             </Menu.Item>
           })
         }
@@ -40,15 +34,11 @@ export const HospitalsLocation = props => {
   return (
     <div className={"container"}>
       <div className={"info_els"}>
-        <Dropdown overlay={menu} info={props.info}>
-          <a
-            href='/'
-            className="ant-dropdown-link"
-            onClick={(e) => e.preventDefault()}
-          >
-           Выберите отделение <DownOutlined />
-          </a>
-        </Dropdown>
+      <Dropdown overlay={menu} info={props.info}>
+    <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
+      {singleDepartment?.data?.name ? singleDepartment?.data?.name :'Выберите отделение'} <DownOutlined />
+    </a>
+  </Dropdown>
         <div className={"hospital__location"}>
           <p>
             <PlusCircleOutlined /> ГБУЗ ТО «Госпиталь для ветеранов войн» -

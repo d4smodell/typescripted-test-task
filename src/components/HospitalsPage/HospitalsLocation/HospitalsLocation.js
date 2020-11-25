@@ -3,11 +3,17 @@ import '../Content.css'
 import { Menu, Dropdown, message } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 
 export const HospitalsLocation = props => {
+  const singleDepartment = useSelector(state => state.departments.department)
+  console.log(singleDepartment?.data?.name)
+  const dispatch = useDispatch()
   const onClick = ({ key }) => {
     message.info(`Click on item ${key}`);
+    dispatch(getSingleDepartmentThunk(key))
   };
 
   const menu = () => {
@@ -39,7 +45,7 @@ export const HospitalsLocation = props => {
             className="ant-dropdown-link"
             onClick={(e) => e.preventDefault()}
           >
-            Стационарное Отделение <DownOutlined />
+            {singleDepartment?.data?.name !== null ? singleDepartment?.data?.name : 'Стационарное отделение'} <DownOutlined />
           </a>
         </Dropdown>
         <div className={"hospital__location"}>

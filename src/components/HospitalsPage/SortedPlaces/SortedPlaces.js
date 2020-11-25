@@ -15,7 +15,11 @@ const CardWrapper = props => {
           <Button size='large' type='primary' shape='circle' icon={<PlusOutlined />} />
         </div>
         <div className="progress_bar">
-        <Progress percent={2} />
+        <Progress percent={47} />
+        </div>
+        <div>
+          <label>Свободно <span style={{color: ' #1890FF'}}>30</span></label>
+          <p>Всего <span style={{color: ' #1890FF'}}>60</span></p>
         </div>
       </Card>
     </div>

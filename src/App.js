@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import AuthorizationPage from './components/Authorization/AuthorizationPage';
 import Hospitals from './components/HospitalsPage/Hospitals';
@@ -11,6 +11,9 @@ function App() {
   useEffect(() => {
     dispatch(getDepartmentsThunk())
   }, [])
+
+  const deps = useSelector(state => state.departments.departments)
+  console.log(deps.data)
   const isAuth = localStorage.access
   return (
     <BrowserRouter className="App">

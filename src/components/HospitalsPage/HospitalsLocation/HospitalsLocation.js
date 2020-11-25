@@ -9,8 +9,9 @@ import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsR
 
 export const HospitalsLocation = props => {
   const singleDepartment = useSelector(state => state.departments.department)
-  console.log(singleDepartment?.data?.name)
+
   const dispatch = useDispatch()
+
   const onClick = ({ key }) => {
     message.info(`Click on item ${key}`);
     dispatch(getSingleDepartmentThunk(key))
@@ -41,11 +42,11 @@ export const HospitalsLocation = props => {
       <div className={"info_els"}>
         <Dropdown overlay={menu} info={props.info}>
           <a
-            href="/"
+            href='/'
             className="ant-dropdown-link"
             onClick={(e) => e.preventDefault()}
           >
-            {singleDepartment?.data?.name !== null ? singleDepartment?.data?.name : 'Стационарное отделение'} <DownOutlined />
+           Выберите отделение <DownOutlined />
           </a>
         </Dropdown>
         <div className={"hospital__location"}>

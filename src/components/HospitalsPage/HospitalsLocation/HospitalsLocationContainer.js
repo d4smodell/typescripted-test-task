@@ -9,6 +9,6 @@ export const HospitalsLocationContainer = () => {
     const dispatch = useDispatch()
     useEffect(() => {
       dispatch(getDepartmentsThunk())
-    }, [])
+    }, [dispatch])
     return <HospitalsLocation info={departments.data} />
 };

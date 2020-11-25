@@ -1,8 +1,8 @@
-import { bunkReleaseAPI } from "../../api"
+import { bunkReleaseAPI } from "../../api/api"
 import { BUNK_RELEASE } from "../types"
 
 const initialState = {
-    currentPatient: null
+    departmentId: null
 }
 
 export const bunkReleaseReducer = (state = initialState, action) => {
@@ -17,9 +17,9 @@ export const bunkReleaseReducer = (state = initialState, action) => {
     }
 }
 
-const bunkReleaseAC = payload => ({type: BUNK_RELEASE, currentPatient: payload})
+const bunkReleaseAC = payload => ({type: BUNK_RELEASE, departmentId: payload})
 
-export const getPatient = () => async dispatch => {
+export const getPatient = departmentId => async dispatch => {
     const response = await bunkReleaseAPI.releaseBunk()
     dispatch(bunkReleaseAC(response))
 }

@@ -40,6 +40,8 @@ export const PlacesCount = (props) => {
           onOk={handleOk}
           confirmLoading={confirmLoading}
           onCancel={handleCancel}
+          okText="Сохранить"
+          cancelText="Отмена"
         >
           <h3>Мужские</h3>
           <div className={"places_settings"}>

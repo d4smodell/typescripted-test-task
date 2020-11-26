@@ -1,4 +1,4 @@
-import { CLEAR_USER_DATA, ERROR_CATCHER, SET_USER_DATA } from "../types";
+import { CLEAR_USER_DATA, ERROR_CATCHER, REFRESH_TOKEN, SET_USER_DATA } from "../types";
 import { authAPI, errorHandler } from "../../api/api";
 
 const initialState = {
@@ -58,9 +58,8 @@ export const login = (username, password, isAuth) => async (dispatch) => {
     dispatch(setAuth(username, password, true));
     if (response?.data?.access) {
       return isAuth === true;
-    } else {
-      dispatch(errorCatcher(response));
-      await errorHandler(response?.data);
+    } else if(response?.data?.refresh) {
+      await authAPI.refreshToken();
     }
     console.log(isAuth);
   } catch (e) {

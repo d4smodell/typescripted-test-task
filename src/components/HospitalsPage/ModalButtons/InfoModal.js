@@ -46,6 +46,8 @@ export const InfoModal = (props) => {
       </Button>
       <div className={"discharge_modal"}>
         <Modal
+          okText="Сохранить"
+          cancelText="Отмена"
           title="Информация о других отделениях"
           visible={visible}
           onOk={handleOk}
@@ -101,7 +103,7 @@ export const InfoModal = (props) => {
                     </div>
                   </div>
                 </div>
-
+                  <hr/>
                 <div style={{display: "flex"}}>
                   <div>
                     <h2>Мужские с кислородом</h2>

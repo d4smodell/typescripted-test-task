@@ -53,6 +53,8 @@ export const PatientDischarge = (props) => {
       </Button>
       <div className={"discharge_modal"}>
         <Modal
+          okText="Сохранить"
+          cancelText="Отмена"
           title="Выписка пациентов"
           visible={visible}
           onOk={handleOk}

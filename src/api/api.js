@@ -24,6 +24,28 @@ export const authAPI = {
       if (e) throw e;
     }
   },
+
+  async refreshToken() {
+    const refresh = localStorage.getItem('refresh');
+    if (refresh ) {
+      try {
+        const username = localStorage.getItem('username');
+        const response = await instance.post("/users/token/refresh/", { refresh, username },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            }
+          });
+        const { access } = response.data;
+        localStorage.setItem('access', access);
+        return { access };
+      } catch (e) {
+        if(e) console.log('Ошибка обновления токена')
+        return null
+      }
+    }}
+
 };
 
 export const additionInfoAPI = {
@@ -75,28 +97,11 @@ export const departmentsAPI = {
 export const changeHospitalPlaces = {
   async changePlaces(
     department_id,
-    male,
-    maleBusy,
-    female,
-    femaleBusy,
-    maleo2,
-    maleo2Busy,
-    femaleo2,
-    femaleo2Busy
+
   ) {
     const response = await instance.post(
       `api/hospitals/bunks/multiple_change/`,
-      {
-        payload: {department_id,
-          male,
-          maleBusy,
-          female,
-          femaleBusy,
-          maleo2,
-          maleo2Busy,
-          femaleo2,
-          femaleo2Busy}
-      },
+      {payload: {}},
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access")}`,

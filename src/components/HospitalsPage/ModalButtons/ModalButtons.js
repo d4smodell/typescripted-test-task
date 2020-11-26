@@ -7,19 +7,6 @@ import { PlacesCount } from "./PlacesCount";
 import { ReplacePatients } from "./ReplacePatients";
 import { InfoModal } from "./InfoModal";
 
-
-
-const PatientsButtonInfo = (props) => {
-  return (
-    <div className={"patients_button"}>
-      <Button size={"large"}>
-        <InfoCircleOutlined />
-        {props.title}
-      </Button>
-    </div>
-  );
-};
-
 export const ModalButtons = (props) => {
   return (
     <div className={"patients_container"}>

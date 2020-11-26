@@ -1,7 +1,22 @@
-.discharge_modal ~div{
-    border-radius: 8px;
-    height: 500px;
+.ant-modal-content{
+    border-radius: 20px;
+    padding: 10px;
     font-size: 25px;
+}
+
+.ant-btn {
+    border-radius: 8px;
+}
+
+.ant-btn span{
+    display: inline;
+    content: "Сохранить";
+    padding: 5px;
+}
+
+.ant-modal-header {
+    border-radius: 20px;
+    border-bottom: none;
 }
 
 .checkbox_field{

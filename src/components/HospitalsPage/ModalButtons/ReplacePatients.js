@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "antd";
-import { Input, Tooltip, Radio } from "antd";
+import { Radio } from "antd";
 import { Select } from "antd";
 import { Modal } from "antd";
 import "./ReplacePatients.css";
+import { useDispatch, useSelector } from "react-redux";
+import {getDepartmentsThunk} from '../../../context/reducers/departmentsReducer'
 
 const RadioGroup = () => {
   const [value, setValue] = React.useState(1);
@@ -25,41 +27,51 @@ const RadioGroup = () => {
 };
 
 const PlaceSelect = () => {
+  const departments = useSelector(state => state.departments.departments)
+  
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    dispatch(getDepartmentsThunk())
+  }, [dispatch])
+
+  const info = departments.data 
+
   const { Option } = Select;
   function onChange(value) {
     console.log(`selected ${value}`);
   }
-  
+
   function onBlur() {
     console.log('blur');
   }
-  
+
   function onFocus() {
     console.log('focus');
   }
-  
+
   function onSearch(val) {
     console.log('search:', val);
   }
   return (
     <div className={'select__patients'}>
-  <Select
-    showSearch
-    style={{ width: 200 }}
-    placeholder="Выберите отделение"
-    optionFilterProp="children"
-    onChange={onChange}
-    onFocus={onFocus}
-    onBlur={onBlur}
-    onSearch={onSearch}
-    filterOption={(input, option) =>
-      option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-    }
-  >
-    <Option value="jack">Jack</Option>
-    <Option value="lucy">Lucy</Option>
-    <Option value="tom">Tom</Option>
-  </Select>
+      <Select
+        showSearch
+        style={{ width: 200 }}
+        placeholder="Выберите отделение"
+        optionFilterProp="children"
+        onChange={onChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onSearch={onSearch}
+        filterOption={(input, option) =>
+          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        }
+      >
+        {info.map(item => {
+          return <Option value={item.name}>{item.name}</Option>
+        })}
+      </Select>
     </div>
   );
 };
@@ -94,6 +106,8 @@ export const ReplacePatients = (props) => {
       </Button>
       <div className={"replace_patients_modal"}>
         <Modal
+          okText="Сохранить"
+          cancelText="Отмена"
           title="Перевод пациентов"
           visible={visible}
           onOk={handleOk}
@@ -102,9 +116,9 @@ export const ReplacePatients = (props) => {
         >
           <h3>Выберите пациента в вашем отделении</h3>
           <RadioGroup />
-          <h3 style={{paddingTop: '10px'}}>В какое отделение переводить?</h3>
+          <h3 style={{ paddingTop: '10px' }}>В какое отделение переводить?</h3>
           <PlaceSelect />
-          <h3 style={{paddingTop: '10px'}}>Доступные места в выбранном отделении</h3>
+          <h3 style={{ paddingTop: '10px' }}>Доступные места в выбранном отделении</h3>
           <RadioGroup />
         </Modal>
       </div>

@@ -1,5 +1,5 @@
-import { CLEAR_USER_DATA, ERROR_CATCHER, REFRESH_TOKEN, SET_USER_DATA } from "../types";
-import { authAPI, errorHandler } from "../../api/api";
+import { CLEAR_USER_DATA, ERROR_CATCHER, SET_USER_DATA } from "../types";
+import { authAPI } from "../../api/api";
 
 const initialState = {
   username: null,
@@ -56,11 +56,12 @@ export const login = (username, password, isAuth) => async (dispatch) => {
   try {
     let response = await authAPI.login(username, password, isAuth);
     dispatch(setAuth(username, password, true));
-    if (response?.data?.access) {
+    if (response?.data?.username) {
       return isAuth === true;
-    } else if(response?.data?.refresh) {
+    } else if(!response?.data?.access) {
       await authAPI.refreshToken();
-    }
+    } else logout()
+    
     console.log(isAuth);
   } catch (e) {
     console.log("ERROR: !!!", e);

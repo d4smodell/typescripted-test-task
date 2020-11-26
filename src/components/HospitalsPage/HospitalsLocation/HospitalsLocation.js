@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import '../Content.css'
 import { Menu, Dropdown, message } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -16,6 +16,10 @@ export const HospitalsLocation = props => {
     console.log(`Click on item ${key}`);
     dispatch(getSingleDepartmentThunk(key))
   };
+
+  useEffect(() => {
+    dispatch(getSingleDepartmentThunk(2))
+  }, [])
 
   const menu = () => {
     return <div>
@@ -36,7 +40,7 @@ export const HospitalsLocation = props => {
       <div className={"info_els"}>
       <Dropdown overlay={menu} info={props.info}>
     <a className="ant-dropdown-link" onClick={e => e.preventDefault()}>
-      {singleDepartment?.data?.name ? singleDepartment?.data?.name :'Выберите отделение'} <DownOutlined />
+      {singleDepartment?.data?.name} <DownOutlined />
     </a>
   </Dropdown>
         <div className={"hospital__location"}>

@@ -14,13 +14,13 @@ export const hospitalPlacesReducer = (state = initialState, action) => {
   }
 };
 
-const changePlaces = (payload) => ({
+const changePlaces = (departmentValues) => ({
   type: CHANGE_PLACES,
-  payload  
+  departmentValues  
 });
 
-export const changeHospitalPlacesThunk = (payload) => async (dispatch) => {
-  const response = await changeHospitalPlaces.changePlaces(payload);
+export const changeHospitalPlacesThunk = (department_id, count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free) => async (dispatch) => {
+  const response = await changeHospitalPlaces.changePlaces(department_id, count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free);
   dispatch(changePlaces(response))
   console.log(response)
 };

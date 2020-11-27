@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import AuthorizationPage from './components/Authorization/AuthorizationPage';
@@ -6,6 +7,10 @@ import { changeHospitalPlacesThunk } from './context/reducers/hospitalPlacesRedu
 import './index.css'
 
 function App() {
+  // const dispatch = useDispatch()
+  // useEffect(() => {
+  //   dispatch(changeHospitalPlacesThunk(2, 4, 13, 18, 19, 17, 6, 8, 5))
+  // })
   const isAuth = localStorage.access && localStorage.username && localStorage.refresh
   return (
     <BrowserRouter className="App">

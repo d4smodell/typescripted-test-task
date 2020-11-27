@@ -27,7 +27,7 @@ export const authAPI = {
 
   async refreshToken() {
     const refresh = localStorage.getItem('refresh');
-    if (refresh ) {
+    if (refresh) {
       try {
         const username = localStorage.getItem('username');
         const response = await instance.post("/users/token/refresh/", { refresh, username },
@@ -41,10 +41,11 @@ export const authAPI = {
         localStorage.setItem('access', access);
         return { access };
       } catch (e) {
-        if(e) console.log('Ошибка обновления токена')
+        if (e) console.log('Ошибка обновления токена')
         return null
       }
-    }}
+    }
+  }
 
 };
 
@@ -95,13 +96,9 @@ export const departmentsAPI = {
 };
 
 export const changeHospitalPlaces = {
-  async changePlaces(
-    department_id,
-
-  ) {
+  async changePlaces(department_id, count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free) {
     const response = await instance.post(
-      `api/hospitals/bunks/multiple_change/`,
-      {payload: {}},
+      `api/hospitals/bunks/multiple_change/`, {department_id, count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free},
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access")}`,
@@ -116,7 +113,7 @@ export const bunkReleaseAPI = {
   async releaseBunk(department_id) {
     try {
       const response = await instance.post(
-        "api/hospitals/bunks/release/", {department_id},
+        "api/hospitals/bunks/release/", { department_id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("access")}`,

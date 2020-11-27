@@ -154,40 +154,67 @@ export const bunkReleaseAPI = {
 };
 
 export const replaceAPI = {
-  async replacePatients(from_sex, from_has_oxygen, from_department_id, to_sex, to_has_oxygen, to_department_id, count) {
+  async replacePatients(
+    from_sex,
+    from_has_oxygen,
+    from_department_id,
+    to_sex,
+    to_has_oxygen,
+    to_department_id,
+    count
+  ) {
     try {
-      const response = await instance.post("api/hospitals/bunks/transfer/", {from_sex, from_has_oxygen, from_department_id, to_sex, to_has_oxygen, to_department_id, count}, 
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
+      const response = await instance.post(
+        "api/hospitals/bunks/transfer/",
+        {
+          from_sex,
+          from_has_oxygen,
+          from_department_id,
+          to_sex,
+          to_has_oxygen,
+          to_department_id,
+          count,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("access")}`,
+          },
         }
-      })
-      return response
-    } catch(e) {
-      if(e) throw e
+      );
+      return response;
+    } catch (e) {
+      if (e) throw e;
     }
-  }
-}
+  },
+};
 
 export const changeCountAPI = {
   async add(department_id, busy_count, free_count, sex, has_oxygen) {
-    const response = await instance.post('api/hospitals/bunks/multiple_addition/', {department_id, busy_count, free_count, sex, has_oxygen}, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access")}`,
+    const response = await instance.post(
+      "api/hospitals/bunks/multiple_addition/",
+      { department_id, busy_count, free_count, sex, has_oxygen },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access")}`,
+        },
       }
-    })
-    return response
+    );
+    return response;
   },
 
   async remove(department_id, busy_count, free_count, sex, has_oxygen) {
-    const response = await instance.post('api/hospitals/bunks/multiple_deletion/', {department_id, busy_count, free_count, sex, has_oxygen}, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access")}`,
+    const response = await instance.post(
+      "api/hospitals/bunks/multiple_deletion/",
+      { department_id, busy_count, free_count, sex, has_oxygen },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access")}`,
+        },
       }
-    })
-    return response
-  }
-}
+    );
+    return response;
+  },
+};
 
 export const errorHandler = (error) => {
   if (error?.status === 401) {

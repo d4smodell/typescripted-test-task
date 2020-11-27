@@ -25,8 +25,8 @@ export const HospitalsLocation = props => {
     return <div>
       <Menu onClick={onClick}>
         {
-          props.info.map(item => {
-            return <Menu.Item key={item.id}>
+          props.info?.map(item => {
+            return <Menu.Item key={item?.id}>
                 {item.name}
             </Menu.Item>
           })

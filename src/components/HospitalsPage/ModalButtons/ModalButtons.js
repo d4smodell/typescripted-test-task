@@ -1,7 +1,4 @@
-import React, { useEffect } from "react";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { Button } from "antd";
-import { Modal } from "antd";
+import React from "react";
 import { PatientDischarge } from "./PatientDischarge";
 import { PlacesCount } from "./PlacesCount";
 import { ReplacePatients } from "./ReplacePatients";

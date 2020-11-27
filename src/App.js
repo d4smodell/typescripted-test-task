@@ -1,8 +1,6 @@
-import { useDispatch } from 'react-redux';
 import {BrowserRouter, Redirect, Route} from 'react-router-dom'
 import AuthorizationPage from './components/Authorization/AuthorizationPage';
 import Hospitals from './components/HospitalsPage/Hospitals';
-import { replace } from './context/reducers/replaceReducer';
 import './index.css'
 
 function App() {

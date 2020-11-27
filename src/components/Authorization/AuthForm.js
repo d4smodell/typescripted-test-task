@@ -1,7 +1,7 @@
 import { Form, Input } from "antd";
 import { UserOutlined, LockOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { connect, useSelector } from "react-redux";
-import { login } from "../../context/reducers/authReducer";
+import { getInfo, login } from "../../context/reducers/authReducer";
 import { useState } from "react";
 import './AuthForm.css'
 import { AlertWrapper } from "./Alert";
@@ -14,8 +14,8 @@ const LoginForm = (props) => {
   const onFinish = (payload) => {
     console.log("Received values of form: ", payload);
     props.login(payload.username, payload.password);
+    props.getInfo()
       setAlert(true);
-      props.setIsEntered(true)
   };
 
   const FormWrapper = () => {
@@ -81,6 +81,7 @@ const LoginForm = (props) => {
 
 const mapDispatchToProps = {
   login,
+  getInfo
 };
 
 export default connect(null, mapDispatchToProps)(LoginForm);

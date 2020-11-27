@@ -26,6 +26,7 @@ export const departmentsReducer = (state = initialState, action) => {
 }
 
 const getDepartments = payload => ({type: GET_DEPARTMENTS, departments: payload})
+
 const getSingleDepartment = payload => ({type: GET_SINGLE_DEPARTMENT, department: payload})
 
 export const getDepartmentsThunk = () => async dispatch => {

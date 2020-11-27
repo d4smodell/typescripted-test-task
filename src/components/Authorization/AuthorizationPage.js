@@ -5,7 +5,7 @@ import { Preview } from './Preview'
 
 const AuthorizationPage = props => {
     return <div className="authorization">
-        <LoginForm setIsEntered={props.setIsEntered}/>
+        <LoginForm/>
         <Preview />
     </div>
 }

@@ -3,3 +3,9 @@
     padding: 10px;
     margin-right: 10px;
 }
+
+
+.radioGroup {
+    display: flex;
+    flex-direction: column;
+}

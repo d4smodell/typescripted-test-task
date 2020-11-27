@@ -1,32 +1,20 @@
 import React from "react";
-import { Button } from "antd";
+import { Form, Button } from "antd";
 import { Modal } from "antd";
 import { Radio } from "antd";
+import { useDispatch, useSelector } from "react-redux";
 import "./PatientsDischarge.css";
-
-const RadioGroup = () => {
-  const [value, setValue] = React.useState(1);
-
-  const onChange = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
-  };
-  return (
-    <Radio.Group onChange={onChange} value={value}>
-      <div className={"checkbox_field"}>
-        <Radio value={1}>Мужчина</Radio>
-        <Radio value={2}>Женщина</Radio>
-        <Radio value={3}>Мужчина с кислородом</Radio>
-        <Radio value={4}>Женщина с кислородом</Radio>
-      </div>
-    </Radio.Group>
-  );
-};
+import { discharge } from "../../../context/reducers/bunkReleaseReducer";
 
 export const PatientDischarge = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState("Content of the modal");
+  const currentDepartment = useSelector(
+    (state) => state.departments.department
+  );
+
+  const dispatch = useDispatch()
 
   const showModal = () => {
     setVisible(true);
@@ -46,6 +34,11 @@ export const PatientDischarge = (props) => {
     setVisible(false);
   };
 
+  const onFinish = (values) => {
+    console.log("Received values of form: ", values.radio);
+    dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
+  };
+
   return (
     <div className={"patients_button"}>
       <Button size={"large"} onClick={showModal}>
@@ -63,7 +56,55 @@ export const PatientDischarge = (props) => {
         >
           <p>Выберите пациента для выписки</p>
           <div className={"checkbox_field"}>
-            <RadioGroup />
+            <Form onFinish={onFinish}>
+              <Form.Item name="radio">
+                <Radio.Group>
+                  <div className="checkbox_field">
+                    <Radio
+                      value={{
+                        sex: "MALE",
+                        has_oxygen: false,
+                        department_id: currentDepartment?.data?.id,
+                      }}
+                    >
+                      Мужчина
+                    </Radio>
+                    <Radio
+                      value={{
+                        sex: "MALE",
+                        has_oxygen: false,
+                        department_id: currentDepartment?.data?.id,
+                      }}
+                    >
+                      Женщина
+                    </Radio>
+                    <Radio
+                      value={{
+                        sex: "MALE",
+                        has_oxygen: false,
+                        department_id: currentDepartment?.data?.id,
+                      }}
+                    >
+                      Мужчина с кислородом
+                    </Radio>
+                    <Radio
+                      value={{
+                        sex: "MALE",
+                        has_oxygen: false,
+                        department_id: currentDepartment?.data?.id,
+                      }}
+                    >
+                      Женщина с кислородом
+                    </Radio>
+                  </div>
+                </Radio.Group>
+              </Form.Item>
+              <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Form>
           </div>
         </Modal>
       </div>

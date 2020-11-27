@@ -19,7 +19,7 @@ export const HospitalsLocation = props => {
 
   useEffect(() => {
     dispatch(getSingleDepartmentThunk(2))
-  }, [])
+  }, [dispatch])
 
   const menu = () => {
     return <div>

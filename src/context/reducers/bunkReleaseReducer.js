@@ -17,9 +17,9 @@ export const bunkReleaseReducer = (state = initialState, action) => {
     }
 }
 
-const bunkReleaseAC = payload => ({type: BUNK_RELEASE, departmentId: payload})
+const dischargePatient = (payload) => ({type: BUNK_RELEASE, payload})
 
-export const getPatient = departmentId => async dispatch => {
-    const response = await bunkReleaseAPI.releaseBunk()
-    dispatch(bunkReleaseAC(response))
+export const discharge = (sex, has_oxygen, department_id) => async dispatch => {
+    const response = await bunkReleaseAPI.releaseBunk(sex, has_oxygen, department_id)
+    dispatch(dischargePatient(response))
 }

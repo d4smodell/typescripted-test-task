@@ -1,60 +1,30 @@
 import React, { useEffect } from "react";
-import { Button } from "antd";
-import { Radio } from "antd";
-import { Select } from "antd";
-import { Modal } from "antd";
-import "./ReplacePatients.css";
+import { Button, Form, Radio, Select, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {getDepartmentsThunk} from '../../../context/reducers/departmentsReducer'
-
-const RadioGroup = () => {
-  const [value, setValue] = React.useState(1);
-
-  const onChange = (e) => {
-    console.log("radio checked", e.target.value);
-    setValue(e.target.value);
-  };
-  return (
-    <Radio.Group onChange={onChange} value={value}>
-      <div className={"checkbox_field"}>
-        <Radio value={1}>Мужчина</Radio>
-        <Radio value={2}>Женщина</Radio>
-        <Radio value={3}>Мужчина с кислородом</Radio>
-        <Radio value={4}>Женщина с кислородом</Radio>
-      </div>
-    </Radio.Group>
-  );
-};
+import { getDepartmentsThunk } from "../../../context/reducers/departmentsReducer";
+import "./ReplacePatients.css";
+import { getInfo } from "../../../context/reducers/authReducer";
+import { replace } from "../../../context/reducers/replaceReducer";
 
 const PlaceSelect = () => {
-  const departments = useSelector(state => state.departments.departments)
-  
-  const dispatch = useDispatch()
-  
-  useEffect(() => {
-    dispatch(getDepartmentsThunk())
-  }, [dispatch])
-
-  const info = departments.data 
-
   const { Option } = Select;
   function onChange(value) {
     console.log(`selected ${value}`);
   }
 
   function onBlur() {
-    console.log('blur');
+    console.log("blur");
   }
 
   function onFocus() {
-    console.log('focus');
+    console.log("focus");
   }
 
   function onSearch(val) {
-    console.log('search:', val);
+    console.log("search:", val);
   }
   return (
-    <div className={'select__patients'}>
+    <div className={"select__patients"}>
       <Select
         showSearch
         style={{ width: 200 }}
@@ -67,11 +37,7 @@ const PlaceSelect = () => {
         filterOption={(input, option) =>
           option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
         }
-      >
-        {info.map(item => {
-          return <Option value={item.name}>{item.name}</Option>
-        })}
-      </Select>
+      ></Select>
     </div>
   );
 };
@@ -80,6 +46,41 @@ export const ReplacePatients = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState("Content of the modal");
+
+  const departments = useSelector((state) => state.departments.departments);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getDepartmentsThunk());
+  }, [dispatch]);
+
+  const info = departments.data;
+
+  const onFinish = ({ radio, radio_second }) => {
+    console.log(
+      "Received values of form: ",
+      radio.from_sex,
+      radio.from_has_oxygen,
+      radio.from_department_id,
+      radio_second.to_sex,
+      radio_second.to_has_oxygen,
+      radio_second.to_department_id,
+      1
+    );
+    dispatch(getInfo());
+    dispatch(
+      replace(
+        radio.from_sex,
+        radio.from_has_oxygen,
+        radio.from_department_id,
+        radio_second.to_sex,
+        radio_second.to_has_oxygen,
+        radio_second.to_department_id,
+        1
+      )
+    );
+  };
 
   const showModal = () => {
     setVisible(true);
@@ -99,6 +100,10 @@ export const ReplacePatients = (props) => {
     setVisible(false);
   };
 
+  const currentDepartment = useSelector(
+    (state) => state.departments.department
+  );
+
   return (
     <div className={"patients_button"}>
       <Button size={"large"} onClick={showModal}>
@@ -115,11 +120,128 @@ export const ReplacePatients = (props) => {
           onCancel={handleCancel}
         >
           <h3>Выберите пациента в вашем отделении</h3>
-          <RadioGroup />
-          <h3 style={{ paddingTop: '10px' }}>В какое отделение переводить?</h3>
-          <PlaceSelect />
-          <h3 style={{ paddingTop: '10px' }}>Доступные места в выбранном отделении</h3>
-          <RadioGroup />
+          <Form
+            name="validate_other"
+            onFinish={onFinish}
+            initialValues={{
+              ["input-number"]: 3,
+              ["checkbox-group"]: ["A", "B"],
+              rate: 3.5,
+            }}
+          >
+            <Form.Item name="radio">
+              <Radio.Group>
+                <div className="radioGroup">
+                  <Radio
+                    value={{
+                      from_sex: "MALE",
+                      from_has_oxygen: false,
+                      from_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Мужчина
+                  </Radio>
+                  <Radio
+                    value={{
+                      from_sex: "FEMALE",
+                      from_has_oxygen: false,
+                      from_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Женщина
+                  </Radio>
+                  <Radio
+                    value={{
+                      from_sex: "MALE",
+                      from_has_oxygen: true,
+                      from_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Мужчина с кислородом
+                  </Radio>
+                  <Radio
+                    value={{
+                      from_sex: "FEMALE",
+                      from_has_oxygen: true,
+                      from_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Женщина с кислородом
+                  </Radio>
+                </div>
+              </Radio.Group>
+            </Form.Item>
+            <p>В какое отделение переводить?</p>
+            <Form.Item
+              name="select"
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Выберите отделение",
+                },
+              ]}
+            >
+              <Select placeholder="Выберите отделение">
+                {info?.map((item) => {
+                  return <Option value={item.name}>{item.name}</Option>;
+                })}
+              </Select>
+            </Form.Item>
+
+            <Form.Item name="radio_second">
+              <Radio.Group>
+                <div className="radioGroup">
+                  <Radio
+                    value={{
+                      to_sex: "MALE",
+                      to_has_oxygen: false,
+                      to_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Мужчина
+                  </Radio>
+                  <Radio
+                    value={{
+                      to_sex: "FEMALE",
+                      to_has_oxygen: false,
+                      to_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Женщина
+                  </Radio>
+                  <Radio
+                    value={{
+                      to_sex: "MALE",
+                      to_has_oxygen: true,
+                      to_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Мужчина с кислородом
+                  </Radio>
+                  <Radio
+                    value={{
+                      to_sex: "FEMALE",
+                      to_has_oxygen: true,
+                      to_department_id: currentDepartment?.data?.id,
+                    }}
+                  >
+                    Женщина с кислородом
+                  </Radio>
+                </div>
+              </Radio.Group>
+            </Form.Item>
+            <Form.Item
+              wrapperCol={{
+                span: 12,
+                offset: 6,
+              }}
+            >
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       </div>
     </div>

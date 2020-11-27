@@ -1,10 +1,15 @@
-import { CLEAR_USER_DATA, ERROR_CATCHER, SET_USER_DATA } from "../types";
-import { authAPI } from "../../api/api";
+import {
+  CLEAR_USER_DATA,
+  ERROR_CATCHER,
+  GET_ADDITIONAL_INFO,
+  SET_USER_DATA,
+} from "../types";
+import { additionInfoAPI, authAPI } from "../../api/api";
 
 const initialState = {
   username: null,
   password: null,
-  isFetching: false,
+  info: null,
   isAuth: false,
   error: null,
 };
@@ -15,6 +20,12 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         ...action.payload,
+      };
+
+    case GET_ADDITIONAL_INFO:
+      return {
+        ...state,
+        info: action.info,
       };
 
     case ERROR_CATCHER:
@@ -34,23 +45,33 @@ export const authReducer = (state = initialState, action) => {
   }
 };
 
-export const setAuth = (username, password, isAuth) => ({
+const setAuth = (username, password, isAuth) => ({
   type: SET_USER_DATA,
   payload: { username, password, isAuth },
 });
 
-export const clearUserData = () => ({
+const clearUserData = () => ({
   type: CLEAR_USER_DATA,
   isAuth: false,
 });
 
 export const errorCatcher = (error) => ({ type: ERROR_CATCHER, error });
+const getAdditionalInfo = (payload) => ({
+  type: GET_ADDITIONAL_INFO,
+  info: payload,
+});
 
-export const logout = () => async dispatch => {
-    localStorage.clear()
-    dispatch(clearUserData())
-    console.log(initialState.isAuth)
-}
+export const getInfo = () => async (dispatch) => {
+  const response = await additionInfoAPI.getAdditionInfo();
+  console.log(response.data.departments);
+  dispatch(getAdditionalInfo(response));
+};
+
+export const logout = () => async (dispatch) => {
+  localStorage.clear();
+  dispatch(clearUserData());
+  console.log(initialState.isAuth);
+};
 
 export const login = (username, password, isAuth) => async (dispatch) => {
   try {
@@ -58,10 +79,10 @@ export const login = (username, password, isAuth) => async (dispatch) => {
     dispatch(setAuth(username, password, true));
     if (response?.data?.username) {
       return isAuth === true;
-    } else if(!response?.data?.access) {
+    } else if (!response?.data?.access) {
       await authAPI.refreshToken();
-    } else logout()
-    
+    } else logout();
+
     console.log(isAuth);
   } catch (e) {
     console.log("ERROR: !!!", e);

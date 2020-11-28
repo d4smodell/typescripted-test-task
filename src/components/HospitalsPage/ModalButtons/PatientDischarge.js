@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Form, Button } from "antd";
 import { Modal } from "antd";
 import { Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import "./PatientsDischarge.css";
 import { discharge } from "../../../context/reducers/bunkReleaseReducer";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
+import "./PatientsDischarge.css";
 
 export const PatientDischarge = (props) => {
   const [visible, setVisible] = React.useState(false);
@@ -13,6 +14,10 @@ export const PatientDischarge = (props) => {
   const currentDepartment = useSelector(
     (state) => state.departments.department
   );
+
+  useEffect(() => {
+    dispatch(getSingleDepartmentThunk)
+  })
 
   const dispatch = useDispatch()
 

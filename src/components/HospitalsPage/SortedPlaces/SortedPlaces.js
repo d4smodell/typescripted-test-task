@@ -1,20 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card } from "antd";
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { Progress, Button } from 'antd';
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import "./SortedPlaces.css";
-import { add, remove } from "../../../context/reducers/changeCountReducer";
 
 const MaleCardWrapper = props => {
   const currentDepartment = useSelector(state => state.departments.department)
 
   const busyPercent = Math.ceil(currentDepartment?.data?.count_male_busy / (currentDepartment?.data?.count_male_busy + currentDepartment?.data?.count_male_free) * 100)
-
-  const dispatch = useDispatch()
-
-  // const plus = dispatch(add(currentDepartment?.data?.id, currentDepartment?.data?.count_male_busy, currentDepartment?.data?.count_male_free, "MALE", false))
-  // const minus = dispatch(remove(currentDepartment?.data?.id, currentDepartment?.data?.count_male_busy, currentDepartment?.data?.count_male_free, "MALE", false))
 
   return (
     <div className={'card'}>

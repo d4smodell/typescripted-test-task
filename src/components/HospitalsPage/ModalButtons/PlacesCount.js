@@ -1,29 +1,26 @@
 import React from "react";
-import { Button } from "antd";
-import { Input, Form } from "antd";
-import { Modal } from "antd";
-import "./PlacesCount.css";
+import { Modal, message, Input, Space, Form, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { changeHospitalPlacesThunk } from "../../../context/reducers/hospitalPlacesReducer";
+import "./PlacesCount.css";
 
 export const PlacesCount = (props) => {
   const currentDepartment = useSelector(state => state.departments.department)
   const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalText, setModalText] = React.useState("Content of the modal");
   const dispatch = useDispatch()
+
+  const alertMessage = useSelector(state => state.places.alertMessage)
 
   const showModal = () => {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
+  const success = alertMessage => {
+    message.success(alertMessage);
+  };
+
+  const error = () => {
+    message.error(alertMessage);
   };
 
   const handleCancel = () => {
@@ -34,10 +31,14 @@ export const PlacesCount = (props) => {
   const onFinish = ({count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free}) => {
     console.log('Received values of form: ', currentDepartment.data.id, count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free);
     dispatch(changeHospitalPlacesThunk(currentDepartment.data.id, count_female_busy, count_female_o2_busy, count_female_free, count_female_o2_free, count_male_busy, count_male_o2_busy, count_male_free, count_male_o2_free))
+    success(alertMessage)
+    setVisible(false);
+    
   };
 
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
+    error()
   };
 
   return (
@@ -49,10 +50,7 @@ export const PlacesCount = (props) => {
         <Modal
           title="Редактирование мест"
           visible={visible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
           onCancel={handleCancel}
-          okText="Сохранить"
           cancelText="Отмена"
         >
           <Form

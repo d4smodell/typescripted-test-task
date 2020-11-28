@@ -22,7 +22,7 @@ export const replace = (
   to_sex,
   to_has_oxygen,
   to_department_id,
-  count
+  count,
 ) => async (dispatch) => {
   const response = await replaceAPI.replacePatients(
     from_sex,
@@ -31,7 +31,7 @@ export const replace = (
     to_sex,
     to_has_oxygen,
     to_department_id,
-    count
+    count,
   );
   dispatch(replacePatients(response));
 };

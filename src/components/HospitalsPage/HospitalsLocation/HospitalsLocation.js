@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import '../Content.css'
-import { Menu, Dropdown, message } from "antd";
+import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";

@@ -19,13 +19,13 @@ const MaleCardWrapper = (props) => {
   );
   const dispatch = useDispatch();
 
-  const handler = useCallback(() => {
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
-  }, [currentDepartment?.data?.id, dispatch])
+  // const handler = useCallback(() => {
+  //   dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+  // }, [currentDepartment?.data?.id, dispatch])
 
-  useEffect(() => {
-    handler()
-  }, [dispatch, handler])
+  // useEffect(() => {
+  //   handler()
+  // }, [dispatch, handler])
 
   return (
     <div className={"card"}>

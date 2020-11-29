@@ -27,13 +27,11 @@ export const ReplacePatients = (props) => {
       to_sex: radio_second.to_sex,
       to_has_oxygen: radio_second.to_has_oxygen,
       to_department_id: select,
-      count: 1
-    }
+      count: 1,
+    };
     dispatch(getInfo());
-    dispatch(
-      replace(payload)
-    );
-    form.resetFields()
+    dispatch(replace(payload));
+    form.resetFields();
     setVisible(false);
   };
 
@@ -42,9 +40,9 @@ export const ReplacePatients = (props) => {
   };
 
   const cancelHandler = () => {
-    form.resetFields()
-    setVisible(false)
-  }
+    form.resetFields();
+    setVisible(false);
+  };
 
   const currentDepartment = useSelector(
     (state) => state.departments.department
@@ -61,9 +59,7 @@ export const ReplacePatients = (props) => {
           cancelText="Отмена"
           title="Перевод пациентов"
           visible={visible}
-          footer={[
-            null
-          ]}
+          footer={[null]}
         >
           <h3>Выберите пациента в вашем отделении</h3>
           <Form form={form} name="validate_other" onFinish={onFinish}>
@@ -110,24 +106,27 @@ export const ReplacePatients = (props) => {
               </Radio.Group>
             </Form.Item>
             <p>В какое отделение переводить?</p>
-            <Form.Item
-              name="select"
-              hasFeedback
-              rules={[
-                {
-                  required: true,
-                  message: "Выберите отделение",
-                },
-              ]}
-            >
-              <div className="customSelect">
-              <Select placeholder="Выберите отделение">
-                {info?.map((item) => {
-                  return <Option key={item.id} value={item.id}>{item.name}</Option>;
-                })}
-              </Select>
-              </div>
-            </Form.Item>
+            <div className="customSelect">
+              <Form.Item
+                name="select"
+                rules={[
+                  {
+                    required: true,
+                    message: "Выберите отделение",
+                  },
+                ]}
+              >
+                <Select placeholder="Выберите отделение">
+                  {info?.map((item) => {
+                    return (
+                      <Option key={item.id} value={item.id}>
+                        {item.name}
+                      </Option>
+                    );
+                  })}
+                </Select>
+              </Form.Item>
+            </div>
 
             <Form.Item name="radio_second">
               <Radio.Group>
@@ -167,27 +166,27 @@ export const ReplacePatients = (props) => {
                 </div>
               </Radio.Group>
             </Form.Item>
-            <div style={{display: 'flex', padding:'0 0 0 210px'}}>
-            <Form.Item
-              wrapperCol={{
-                span: 12,
-                offset: 6,
-              }}
-            >
-              <Button onClick={cancelHandler} type="primary" htmlType="reset">
-                Отмена
-              </Button>
-            </Form.Item>
-            <Form.Item
-              wrapperCol={{
-                span: 12,
-                offset: 6,
-              }}
-            >
-              <Button type="primary" htmlType="submit">
-                Перевести
-              </Button>
-            </Form.Item>
+            <div style={{ display: "flex", padding: "0 0 0 210px" }}>
+              <Form.Item
+                wrapperCol={{
+                  span: 12,
+                  offset: 6,
+                }}
+              >
+                <Button onClick={cancelHandler} type="primary" htmlType="reset">
+                  Отмена
+                </Button>
+              </Form.Item>
+              <Form.Item
+                wrapperCol={{
+                  span: 12,
+                  offset: 6,
+                }}
+              >
+                <Button type="primary" htmlType="submit">
+                  Перевести
+                </Button>
+              </Form.Item>
             </div>
           </Form>
         </Modal>

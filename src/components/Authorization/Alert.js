@@ -1,5 +1,4 @@
 import { Alert } from "antd";
-import { useSelector } from "react-redux";
 import './AuthForm.css'
 
 export const AlertWrapper = () => {

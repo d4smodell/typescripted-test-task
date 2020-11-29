@@ -120,11 +120,13 @@ export const ReplacePatients = (props) => {
                 },
               ]}
             >
+              <div className="customSelect">
               <Select placeholder="Выберите отделение">
                 {info?.map((item) => {
                   return <Option key={item.id} value={item.id}>{item.name}</Option>;
                 })}
               </Select>
+              </div>
             </Form.Item>
 
             <Form.Item name="radio_second">

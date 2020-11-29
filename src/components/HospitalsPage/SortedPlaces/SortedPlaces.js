@@ -1,10 +1,11 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Card } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Progress, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { add, remove } from "../../../context/reducers/changeCountReducer";
 import "./SortedPlaces.css";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 const MaleCardWrapper = (props) => {
   const currentDepartment = useSelector(
@@ -17,6 +18,14 @@ const MaleCardWrapper = (props) => {
       100
   );
   const dispatch = useDispatch();
+
+  const handler = useCallback(() => {
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+  }, [currentDepartment?.data?.id, dispatch])
+
+  useEffect(() => {
+    handler()
+  }, [dispatch, handler])
 
   return (
     <div className={"card"}>
@@ -32,7 +41,18 @@ const MaleCardWrapper = (props) => {
             shape="circle"
             icon={<MinusOutlined />}
           />
-          Занято
+          <div style={{ background: "#F0F2F5", padding: "10px" }}>
+            Занято{" "}
+            <span
+              style={{
+                background: "#fff",
+                padding: "10px 10px",
+                borderRadius: "10px",
+              }}
+            >
+              {currentDepartment?.data?.count_male_busy}
+            </span>
+          </div>
           <Button
             onClick={() =>
               dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", false))
@@ -90,7 +110,19 @@ const FemaleCardWrapper = (props) => {
             shape="circle"
             icon={<MinusOutlined />}
           />
-          Занято
+          <div style={{ background: "#F0F2F5", padding: "10px" }}>
+            <span style={{fontSize: '14px'}}>Занято</span>{" "}
+            <span
+              style={{
+                boxShadow: '0 10px 10px rgba(0,0,0,0.5);',
+                background: "#fff",
+                padding: "10px 10px",
+                borderRadius: "10px",
+              }}
+            >
+              {currentDepartment?.data?.count_female_busy}
+            </span>
+          </div>
           <Button
             onClick={() =>
               dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", false))
@@ -145,7 +177,19 @@ const MaleO2CardWrapper = (props) => {
             shape="circle"
             icon={<MinusOutlined />}
           />
-          Занято
+          <div style={{ background: "#F0F2F5", padding: "10px" }}>
+            Занято{" "}
+            <span
+              style={{
+                background: "#fff",
+                padding: "10px 10px",
+                borderRadius: "10px",
+                fontSize: '16px'
+              }}
+            >
+              {currentDepartment?.data?.count_male_o2_busy}
+            </span>
+          </div>
           <Button
             onClick={() =>
               dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", true))
@@ -187,9 +231,8 @@ const FemaleO2CardWrapper = (props) => {
   const dispatch = useDispatch();
 
   const plusHandler = useCallback(() => {
-    dispatch(remove(currentDepartment?.data?.id, 0, 1, "FEMALE", true))
-  }, [currentDepartment?.data?.id, dispatch])
-
+    dispatch(remove(currentDepartment?.data?.id, 0, 1, "FEMALE", true));
+  }, [currentDepartment?.data?.id, dispatch]);
 
   return (
     <div className={"card"}>
@@ -197,15 +240,25 @@ const FemaleO2CardWrapper = (props) => {
         <h1>{props.title}</h1>
         <div className={"plus_min"}>
           <Button
-            onClick={() =>
-              plusHandler()
-            }
+            onClick={() => plusHandler()}
             size="large"
             type="primary"
             shape="circle"
             icon={<MinusOutlined />}
           />
-          Занято
+          <div style={{ background: "#F0F2F5", padding: "10px" }}>
+            Занято{" "}
+            <span
+              style={{
+                background: "#fff",
+                padding: "10px 10px",
+                borderRadius: "10px",
+                fontSize: '16px'
+              }}
+            >
+              {currentDepartment?.data?.count_female_o2_busy}
+            </span>
+          </div>
           <Button
             onClick={() =>
               dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", true))

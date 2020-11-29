@@ -19,5 +19,5 @@ const replacePatients = (payload) => ({ type: REPLACE_PATIENTS, payload });
 export const replace = payload => async (dispatch) => {
   const response = await replaceAPI.replacePatients(payload);
   dispatch(replacePatients(response));
-  message.info(response.data)
+  message.info(response?.data || response?.detail || "Произошла ошибка, попробуйте ещё раз!!")
 };

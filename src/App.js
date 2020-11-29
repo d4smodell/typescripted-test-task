@@ -5,10 +5,11 @@ import Hospitals from './components/HospitalsPage/Hospitals';
 import './index.css'
 
 function App() {
-  // const isAuth = localStorage.access && localStorage.username && localStorage.refresh
-  const isAuth = useSelector(state => state.login.isAuth)
+  const isAuth = localStorage.access && localStorage.username && localStorage.refresh
+  // const isAuth = useSelector(state => state.login.isAuth)
   return (
     <BrowserRouter className="App">
+      {/* {!localStorage.getItem('token') ? <Redirect from='/hospitals' to='/' /> : ''}   */}
       {!isAuth ? <Redirect to='/'/> : <Redirect to="/hospitals"/>}
       {isAuth ? <Route path="/hospitals" render={() => <Hospitals />} /> : <Route path='/' render={() => <AuthorizationPage />}/>}
     </BrowserRouter>

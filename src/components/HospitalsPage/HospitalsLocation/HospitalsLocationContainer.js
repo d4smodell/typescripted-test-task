@@ -12,5 +12,5 @@ export const HospitalsLocationContainer = () => {
     dispatch(getDepartmentsThunk())
   }, [dispatch])
   
-  return <HospitalsLocation info={departments.data} />
+  return <HospitalsLocation info={departments?.data} />
 };

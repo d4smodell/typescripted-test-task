@@ -1,5 +1,3 @@
-import { ReplacePatients } from "../components/HospitalsPage/ModalButtons/ReplacePatients";
-
 const { default: Axios } = require("axios");
 
 const instance = Axios.create({
@@ -23,7 +21,7 @@ export const authAPI = {
       localStorage.setItem("username", username);
       return response;
     } catch (e) {
-      if (e) throw e;
+      if (e) console.log(e);
     }
   },
 
@@ -63,7 +61,7 @@ export const additionInfoAPI = {
       });
       return response;
     } catch (e) {
-      if (e) throw e;
+      if (e) console.log(e);;
     }
   },
 };
@@ -78,7 +76,7 @@ export const departmentsAPI = {
       });
       return response;
     } catch (e) {
-      if (e) throw e;
+      if (e) console.log(e);
     }
   },
 
@@ -94,13 +92,13 @@ export const departmentsAPI = {
       );
       return response;
     } catch (e) {
-      if (e) throw e;
+      if(e) console.log(e)
     }
   },
 };
 
 export const changeHospitalPlaces = {
-  async changePlaces(
+  async changePlaces({
     department_id,
     count_female_busy,
     count_female_o2_busy,
@@ -109,8 +107,8 @@ export const changeHospitalPlaces = {
     count_male_busy,
     count_male_o2_busy,
     count_male_free,
-    count_male_o2_free
-  ) {
+    count_male_o2_free,
+  }) {
     const response = await instance.post(
       `api/hospitals/bunks/multiple_change/`,
       {
@@ -148,21 +146,21 @@ export const bunkReleaseAPI = {
       );
       return response;
     } catch (e) {
-      if (e) throw e;
+      if(e) console.log(e)
     }
   },
 };
 
 export const replaceAPI = {
-  async replacePatients(
+  async replacePatients({
     from_sex,
     from_has_oxygen,
     from_department_id,
     to_sex,
     to_has_oxygen,
     to_department_id,
-    count
-  ) {
+    count,
+  }) {
     try {
       const response = await instance.post(
         "api/hospitals/bunks/transfer/",

@@ -36,6 +36,5 @@ export const getDepartmentsThunk = () => async dispatch => {
 
 export const getSingleDepartmentThunk = departmentId => async dispatch => {
     const response = await departmentsAPI.getSingleDepartment(departmentId)
-    console.log(response)
     dispatch(getSingleDepartment(response))
 }

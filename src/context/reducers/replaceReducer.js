@@ -1,5 +1,6 @@
 import { replaceAPI } from "../../api/api";
 import { REPLACE_PATIENTS } from "../types";
+import { message } from 'antd';
 
 export const replaceReducer = (state, action) => {
   switch (action.type) {
@@ -15,23 +16,8 @@ export const replaceReducer = (state, action) => {
 
 const replacePatients = (payload) => ({ type: REPLACE_PATIENTS, payload });
 
-export const replace = (
-  from_sex,
-  from_has_oxygen,
-  from_department_id,
-  to_sex,
-  to_has_oxygen,
-  to_department_id,
-  count,
-) => async (dispatch) => {
-  const response = await replaceAPI.replacePatients(
-    from_sex,
-    from_has_oxygen,
-    from_department_id,
-    to_sex,
-    to_has_oxygen,
-    to_department_id,
-    count,
-  );
+export const replace = payload => async (dispatch) => {
+  const response = await replaceAPI.replacePatients(payload);
   dispatch(replacePatients(response));
+  message.info(response.data)
 };

@@ -1,54 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, Radio, Select, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getDepartmentsThunk } from "../../../context/reducers/departmentsReducer";
-import "./ReplacePatients.css";
 import { getInfo } from "../../../context/reducers/authReducer";
 import { replace } from "../../../context/reducers/replaceReducer";
-
-const PlaceSelect = () => {
-  const { Option } = Select;
-  function onChange(value) {
-    console.log(`selected ${value}`);
-  }
-
-  function onBlur() {
-    console.log("blur");
-  }
-
-  function onFocus() {
-    console.log("focus");
-  }
-
-  function onSearch(val) {
-    console.log("search:", val);
-  }
-  return (
-    <div className={"select__patients"}>
-      <Select
-        showSearch
-        style={{ width: 200 }}
-        placeholder="Выберите отделение"
-        optionFilterProp="children"
-        onChange={onChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        onSearch={onSearch}
-        filterOption={(input, option) =>
-          option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        }
-      ></Select>
-    </div>
-  );
-};
+import "./ReplacePatients.css";
 
 export const ReplacePatients = (props) => {
-  const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalText, setModalText] = React.useState("Content of the modal");
-
+  const [form] = Form.useForm();
+  const { Option } = Select;
+  const [visible, setVisible] = useState(false);
   const departments = useSelector((state) => state.departments.departments);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -57,48 +19,32 @@ export const ReplacePatients = (props) => {
 
   const info = departments.data;
 
-  const onFinish = ({ radio, radio_second }) => {
-    console.log(
-      "Received values of form: ",
-      radio.from_sex,
-      radio.from_has_oxygen,
-      radio.from_department_id,
-      radio_second.to_sex,
-      radio_second.to_has_oxygen,
-      radio_second.to_department_id,
-      1
-    );
+  const onFinish = ({ radio, radio_second, select }) => {
+    const payload = {
+      from_sex: radio.from_sex,
+      from_has_oxygen: radio.from_has_oxygen,
+      from_department_id: radio.from_department_id,
+      to_sex: radio_second.to_sex,
+      to_has_oxygen: radio_second.to_has_oxygen,
+      to_department_id: select,
+      count: 1
+    }
     dispatch(getInfo());
     dispatch(
-      replace(
-        radio.from_sex,
-        radio.from_has_oxygen,
-        radio.from_department_id,
-        radio_second.to_sex,
-        radio_second.to_has_oxygen,
-        radio_second.to_department_id,
-        1
-      )
+      replace(payload)
     );
+    form.resetFields()
+    setVisible(false);
   };
 
   const showModal = () => {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    console.log("Clicked cancel button");
-    setVisible(false);
-  };
+  const cancelHandler = () => {
+    form.resetFields()
+    setVisible(false)
+  }
 
   const currentDepartment = useSelector(
     (state) => state.departments.department
@@ -115,20 +61,12 @@ export const ReplacePatients = (props) => {
           cancelText="Отмена"
           title="Перевод пациентов"
           visible={visible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
-          onCancel={handleCancel}
+          footer={[
+            null
+          ]}
         >
           <h3>Выберите пациента в вашем отделении</h3>
-          <Form
-            name="validate_other"
-            onFinish={onFinish}
-            initialValues={{
-              ["input-number"]: 3,
-              ["checkbox-group"]: ["A", "B"],
-              rate: 3.5,
-            }}
-          >
+          <Form form={form} name="validate_other" onFinish={onFinish}>
             <Form.Item name="radio">
               <Radio.Group>
                 <div className="radioGroup">
@@ -184,7 +122,7 @@ export const ReplacePatients = (props) => {
             >
               <Select placeholder="Выберите отделение">
                 {info?.map((item) => {
-                  return <Option value={item.name}>{item.name}</Option>;
+                  return <Option key={item.id} value={item.id}>{item.name}</Option>;
                 })}
               </Select>
             </Form.Item>
@@ -196,7 +134,6 @@ export const ReplacePatients = (props) => {
                     value={{
                       to_sex: "MALE",
                       to_has_oxygen: false,
-                      to_department_id: currentDepartment?.data?.id,
                     }}
                   >
                     Мужчина
@@ -205,7 +142,6 @@ export const ReplacePatients = (props) => {
                     value={{
                       to_sex: "FEMALE",
                       to_has_oxygen: false,
-                      to_department_id: currentDepartment?.data?.id,
                     }}
                   >
                     Женщина
@@ -214,7 +150,6 @@ export const ReplacePatients = (props) => {
                     value={{
                       to_sex: "MALE",
                       to_has_oxygen: true,
-                      to_department_id: currentDepartment?.data?.id,
                     }}
                   >
                     Мужчина с кислородом
@@ -223,13 +158,23 @@ export const ReplacePatients = (props) => {
                     value={{
                       to_sex: "FEMALE",
                       to_has_oxygen: true,
-                      to_department_id: currentDepartment?.data?.id,
                     }}
                   >
                     Женщина с кислородом
                   </Radio>
                 </div>
               </Radio.Group>
+            </Form.Item>
+            <div style={{display: 'flex', padding:'0 0 0 210px'}}>
+            <Form.Item
+              wrapperCol={{
+                span: 12,
+                offset: 6,
+              }}
+            >
+              <Button onClick={cancelHandler} type="primary" htmlType="reset">
+                Отмена
+              </Button>
             </Form.Item>
             <Form.Item
               wrapperCol={{
@@ -238,9 +183,10 @@ export const ReplacePatients = (props) => {
               }}
             >
               <Button type="primary" htmlType="submit">
-                Submit
+                Перевести
               </Button>
             </Form.Item>
+            </div>
           </Form>
         </Modal>
       </div>

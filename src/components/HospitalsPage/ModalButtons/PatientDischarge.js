@@ -9,15 +9,9 @@ import "./PatientsDischarge.css";
 
 export const PatientDischarge = (props) => {
   const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalText, setModalText] = React.useState("Content of the modal");
-  const currentDepartment = useSelector(
-    (state) => state.departments.department
-  );
+  const currentDepartment = useSelector(state => state.departments.department);
 
-  useEffect(() => {
-    dispatch(getSingleDepartmentThunk)
-  })
+  const [form] = Form.useForm();
 
   const dispatch = useDispatch()
 
@@ -25,24 +19,22 @@ export const PatientDischarge = (props) => {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-
   const handleCancel = () => {
     console.log("Clicked cancel button");
+    form.resetFields()
     setVisible(false);
   };
 
   const onFinish = (values) => {
     console.log("Received values of form: ", values.radio);
     dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
+    form.resetFields()
+    setVisible(false);
   };
+
+  useEffect(() => {
+    dispatch(getSingleDepartmentThunk(2))
+  }, [dispatch])
 
   return (
     <div className={"patients_button"}>
@@ -51,17 +43,16 @@ export const PatientDischarge = (props) => {
       </Button>
       <div className={"discharge_modal"}>
         <Modal
+          footer={null}
           okText="Сохранить"
           cancelText="Отмена"
           title="Выписка пациентов"
           visible={visible}
-          onOk={handleOk}
-          confirmLoading={confirmLoading}
           onCancel={handleCancel}
         >
           <p>Выберите пациента для выписки</p>
           <div className={"checkbox_field"}>
-            <Form onFinish={onFinish}>
+            <Form form={form} onFinish={onFinish}>
               <Form.Item name="radio">
                 <Radio.Group>
                   <div className="checkbox_field">
@@ -104,11 +95,18 @@ export const PatientDischarge = (props) => {
                   </div>
                 </Radio.Group>
               </Form.Item>
-              <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
-                <Button type="primary" htmlType="submit">
-                  Submit
+              <div style={{display:'flex', float: 'right', padding: '0 20px 0 0'}}>
+              <Form.Item wrapperCol={{ span: 13, offset: 6 }}>
+                <Button onClick={handleCancel} type="primary" htmlType="reset">
+                  Отмена
                 </Button>
               </Form.Item>
+              <Form.Item wrapperCol={{ span: 13, offset: 6 }}>
+                <Button type="primary" htmlType="submit">
+                  Выписать
+                </Button>
+              </Form.Item>
+              </div>
             </Form>
           </div>
         </Modal>

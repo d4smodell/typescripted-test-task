@@ -14,28 +14,15 @@ export const InfoModal = (props) => {
   const filtered = otherDepartment?.data?.filter(
     (item) => item.id !== currentDepartment?.data?.id
   );
-  console.log(filtered);
 
   const [visible, setVisible] = React.useState(false);
-  const [confirmLoading, setConfirmLoading] = React.useState(false);
-  const [modalText, setModalText] = React.useState("Content of the modal");
 
   const showModal = () => {
     setVisible(true);
   };
 
   const handleOk = () => {
-    setModalText("The modal will be closed after two seconds");
-    setConfirmLoading(true);
-    setTimeout(() => {
       setVisible(false);
-      setConfirmLoading(false);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    console.log("Clicked cancel button");
-    setVisible(false);
   };
 
   return (
@@ -46,16 +33,16 @@ export const InfoModal = (props) => {
       </Button>
       <div className={"discharge_modal"}>
         <Modal
-          okText="Сохранить"
+          okText="Закрыть"
           cancelText="Отмена"
           title="Информация о других отделениях"
           visible={visible}
           onOk={handleOk}
-          confirmLoading={confirmLoading}
-          onCancel={handleCancel}
+          footer={[
+            <Button onClick={handleOk}>Закрыть</Button>
+          ]}
         >
           {filtered?.map((item) => {
-            console.log(item?.id);
             return (
               <div style={{ margin: "0 auto" }} key={item?.id}>
                 <h1>{item?.name}</h1>

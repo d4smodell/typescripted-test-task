@@ -1,3 +1,4 @@
+import { message } from "antd"
 import { bunkReleaseAPI } from "../../api/api"
 import { BUNK_RELEASE } from "../types"
 
@@ -22,4 +23,5 @@ const dischargePatient = (payload) => ({type: BUNK_RELEASE, payload})
 export const discharge = (sex, has_oxygen, department_id) => async dispatch => {
     const response = await bunkReleaseAPI.releaseBunk(sex, has_oxygen, department_id)
     dispatch(dischargePatient(response))
+    message.info(response?.data)
 }

@@ -63,7 +63,6 @@ const getAdditionalInfo = (payload) => ({
 
 export const getInfo = () => async (dispatch) => {
   const response = await additionInfoAPI.getAdditionInfo();
-  console.log(response.data.departments);
   dispatch(getAdditionalInfo(response));
 };
 

@@ -81,11 +81,11 @@ export const login = (username, password, isAuth) => async (dispatch) => {
     } else if (!response?.data?.access) {
       await authAPI.refreshToken();
     } else logout();
-
-    console.log(isAuth);
   } catch (e) {
-    console.log("ERROR: !!!", e);
-    if (e?.status === 401) throw console.log("ERROR: !!!", e.status);
+    if (e) {
+      const err = JSON.parse(e)
+      console.log(err)
+    }
   }
 };
 

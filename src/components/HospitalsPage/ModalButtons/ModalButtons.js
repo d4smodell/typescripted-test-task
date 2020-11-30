@@ -7,7 +7,7 @@ import { InfoModal } from "./InfoModal";
 export const ModalButtons = (props) => {
   return (
     <div className={"patients_container"}>
-      <div className={"patients_actions"}>
+      <div style={{flexWrap: 'wrap'}} className={"patients_actions"}>
         <PlacesCount title={"Изменить число мест"} />
         <ReplacePatients title={"Перевести пациентов"} />
         <PatientDischarge title={"Выписать пациентов"} />

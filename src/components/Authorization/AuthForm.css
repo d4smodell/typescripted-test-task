@@ -1,10 +1,18 @@
 @import 'antd/dist/antd.css';
 
+@media all and (max-width: 560px) {
+    .Preview {
+        display: none;
+    }
+}
+
 .AlertWrapper div {
     max-width: 500px;
     margin: 60px 120px 10px 0px;
     border-radius: 16px;
     width: 332px;
+    position: absolute;
+    left: 1px;
 }
 
 .FormWrapper {
@@ -13,6 +21,7 @@
     background-color: #fff;
     height: 408px;
     max-width: 332px;
+    position: relative;
 }
 
 .FormWrapper span {

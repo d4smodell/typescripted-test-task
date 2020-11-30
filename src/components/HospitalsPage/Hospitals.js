@@ -5,8 +5,8 @@ import { Header } from "./Header/Header";
 import { PlacesInfo } from "./PlacesInfo/PlacesInfo";
 import { ModalButtons } from "./ModalButtons/ModalButtons";
 import { SortedPlaces } from "./SortedPlaces/SortedPlaces";
-import "./Content.css";
 import { HospitalsLocation } from "./HospitalsLocation/HospitalsLocation";
+import "./Content.css";
 
 const Hospitals = (props) => {
   return (

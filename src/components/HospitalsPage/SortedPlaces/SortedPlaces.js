@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Card } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Progress, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { add, remove } from "../../../context/reducers/changeCountReducer";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 import "./SortedPlaces.css";
 
 const MaleCardWrapper = (props) => {
@@ -102,10 +103,9 @@ const FemaleCardWrapper = (props) => {
             icon={<MinusOutlined />}
           />
           <div style={{ background: "#F0F2F5", padding: "10px" }}>
-            <span style={{fontSize: '14px'}}>Занято</span>{" "}
+            <span style={{ fontSize: "14px" }}>Занято</span>{" "}
             <span
               style={{
-                boxShadow: '0 10px 10px rgba(0,0,0,0.5);',
                 background: "#fff",
                 padding: "10px 10px",
                 borderRadius: "10px",
@@ -175,7 +175,7 @@ const MaleO2CardWrapper = (props) => {
                 background: "#fff",
                 padding: "10px 10px",
                 borderRadius: "10px",
-                fontSize: '16px'
+                fontSize: "16px",
               }}
             >
               {currentDepartment?.data?.count_male_o2_busy}
@@ -244,7 +244,7 @@ const FemaleO2CardWrapper = (props) => {
                 background: "#fff",
                 padding: "10px 10px",
                 borderRadius: "10px",
-                fontSize: '16px'
+                fontSize: "16px",
               }}
             >
               {currentDepartment?.data?.count_female_o2_busy}
@@ -297,6 +297,15 @@ export const SortedPlaces = (props) => {
   const femaleO2Total =
     placesCount?.data?.count_female_o2_free +
     placesCount?.data?.count_female_o2_busy;
+
+  const dispatch = useDispatch();
+  const handler = useCallback(() => {
+    dispatch(getSingleDepartmentThunk(placesCount?.data?.id || 2));
+  }, [dispatch, placesCount?.data?.id]);
+
+  useEffect(() => {
+    handler();
+  }, [handler]);
 
   return (
     <div className={"card_container"}>

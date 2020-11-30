@@ -22,7 +22,6 @@ export const PlacesCount = (props) => {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setVisible(false);
     form.resetFields();
   };

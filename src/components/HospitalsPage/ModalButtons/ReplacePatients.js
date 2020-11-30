@@ -10,8 +10,8 @@ export const ReplacePatients = (props) => {
   const { Option } = Select;
   const [visible, setVisible] = useState(false);
   const departments = useSelector((state) => state.departments.departments);
+  const info = departments?.data;
   const dispatch = useDispatch();
-  const info = departments.data;
 
   const onFinish = ({ radio, radio_second, select }) => {
     const payload = {
@@ -53,7 +53,7 @@ export const ReplacePatients = (props) => {
           cancelText="Отмена"
           title="Перевод пациентов"
           visible={visible}
-          footer={[null]}
+          footer={null}
         >
           <h3>Выберите пациента в вашем отделении</h3>
           <Form form={form} name="validate_other" onFinish={onFinish}>

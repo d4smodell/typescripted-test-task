@@ -4,14 +4,14 @@ import { useHistory } from "react-router-dom";
 
 export const LogoutButton = (props) => {
   const history = useHistory()
-  const loggingOut = () => {
+  const logout = () => {
     localStorage.clear()
-    return history.push('/')
+    history.push('/')
   }
   return (
     <div className={"HospitalsLogoutButtonWrapper"}>
       <Button
-        onClick={loggingOut}
+        onClick={logout}
         danger
         size={"large"}
         type="primary"

@@ -1,10 +1,10 @@
-import React from "react";
-import "../Content.css";
+import React, { useEffect } from "react";
 import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { AimOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
+import { getDepartmentsThunk, getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
+import "../Content.css";
 
 export const HospitalsLocation = (props) => {
   const singleDepartment = useSelector((state) => state.departments.department);
@@ -13,15 +13,18 @@ export const HospitalsLocation = (props) => {
 
   const dispatch = useDispatch();
 
-  const onClick = ({ key }) => {
-    console.log(`Click on item ${key}`);
+  useEffect(() => {
+    dispatch(getDepartmentsThunk())  
+  }, [dispatch])
+
+  const getDepartment = ({ key }) => {
     dispatch(getSingleDepartmentThunk(key));
   };
 
   const menu = () => {
     return (
       <div>
-        <Menu onClick={onClick}>
+        <Menu onClick={(key) => getDepartment(key)}>
           {info?.map((item) => {
             return <Menu.Item key={item?.id}>{item.name}</Menu.Item>;
           })}

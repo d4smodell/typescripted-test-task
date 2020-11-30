@@ -1,3 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+@media all and (max-width: 560px) {
+    h1 {
+        margin: 0 auto
+    }
+    div {
+        margin: 0 auto
+    }
+    .hospital__location {
+        display: none;
+    }
+}
+
 .container {
     max-width: 2000px;
     margin: 0 auto;

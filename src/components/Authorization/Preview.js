@@ -1,6 +1,7 @@
 import React from "react";
 import emblem from "../Images/emblem_tyumen.png";
 import logo from "../Images/itslogo.png";
+import './AuthForm.css'
 
 export const Preview = (props) => {
   return (

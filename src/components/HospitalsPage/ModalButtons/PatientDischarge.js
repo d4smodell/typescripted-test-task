@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Form, Button } from "antd";
 import { Modal } from "antd";
 import { Radio } from "antd";
@@ -19,13 +19,11 @@ export const PatientDischarge = (props) => {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     form.resetFields()
     setVisible(false);
   };
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values.radio);
     dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
     form.resetFields()
     setVisible(false);

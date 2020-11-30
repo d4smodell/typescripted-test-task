@@ -2,6 +2,18 @@ body {
     background: #F0F2F5;
 }
 
+@media all and (max-width: 560px) {
+    h1 {
+        margin: 0 auto
+    }
+    div {
+        margin: 0 auto
+    }
+    .hospitals__header {
+        display: none;
+    }
+}
+
 .hospitals__container {
     display: flex;
     justify-content: space-between;

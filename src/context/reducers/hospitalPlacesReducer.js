@@ -24,8 +24,15 @@ const changePlaces = (departmentValues) => ({
 });
 
 export const changeHospitalPlacesThunk = (payload) => async (dispatch) => {
-  const response = await changeHospitalPlaces.changePlaces(payload);
-  dispatch(changePlaces(response));
-  message.info(response?.data || "Произошла ошибка, попробуйте ещё раз!");
-  console.log(response)
+  try {
+    const response = await changeHospitalPlaces.changePlaces(payload);
+    dispatch(changePlaces(response));
+    message.info(response?.data);
+    console.log(response)
+  } catch(e) {
+    if(e) {
+      const err = JSON.stringify(e)
+      message.error(err)
+    }
+  }
 };

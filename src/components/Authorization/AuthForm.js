@@ -1,9 +1,5 @@
 import { Form, Input } from "antd";
-import {
-  UserOutlined,
-  LockOutlined,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
+import { UserOutlined, LockOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { connect } from "react-redux";
 import { getInfo, login } from "../../context/reducers/authReducer";
 import { useState } from "react";
@@ -26,9 +22,6 @@ const LoginForm = (props) => {
       if (username) {
         history.push("/hospitals");
       } 
-      if(!username) {
-        setAlert(true)
-      }
     } catch(e) {
       if(e) {
         setAlert(true);

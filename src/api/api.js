@@ -1,3 +1,5 @@
+import { message } from "antd";
+
 const { default: Axios } = require("axios");
 
 const instance = Axios.create({
@@ -21,7 +23,17 @@ export const authAPI = {
       localStorage.setItem("username", username);
       return response;
     } catch (e) {
-      if (e) console.log(e);
+      if(e) {
+        message.error({
+          content: 'Неверный логин или пароль! Пожалуйста проверьте правильность введенных данных и повторите попытку',
+          className: 'custom-class',
+          icon: null,
+          style: {
+            marginTop: '69vh',
+            marginRight: '85vh',
+          },
+        });
+      }
     }
   },
 

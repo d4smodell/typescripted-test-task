@@ -4,7 +4,6 @@ import { Modal } from "antd";
 import { Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { discharge } from "../../../context/reducers/bunkReleaseReducer";
-import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 import "./PatientsDischarge.css";
 
 export const PatientDischarge = (props) => {
@@ -31,10 +30,6 @@ export const PatientDischarge = (props) => {
     form.resetFields()
     setVisible(false);
   };
-
-  useEffect(() => {
-    dispatch(getSingleDepartmentThunk(2))
-  }, [dispatch])
 
   return (
     <div className={"patients_button"}>
@@ -97,7 +92,7 @@ export const PatientDischarge = (props) => {
               </Form.Item>
               <div style={{display:'flex', float: 'right', padding: '0 20px 0 0'}}>
               <Form.Item wrapperCol={{ span: 13, offset: 6 }}>
-                <Button onClick={handleCancel} type="primary" htmlType="reset">
+                <Button onClick={handleCancel} htmlType="reset">
                   Отмена
                 </Button>
               </Form.Item>

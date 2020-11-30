@@ -13,8 +13,6 @@ export const PlacesCount = (props) => {
   const [visible, setVisible] = React.useState(false);
   const dispatch = useDispatch();
 
-  const alertMessage = useSelector((state) => state.places.alertMessage);
-
   const showModal = () => {
     setVisible(true);
   };
@@ -261,7 +259,6 @@ export const PlacesCount = (props) => {
               <div className="form_btn">
                 <Form.Item>
                   <Button
-                    type="primary"
                     htmlType="reset"
                     className="cancelbtn"
                     onClick={handleCancel}

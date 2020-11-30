@@ -1,11 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Progress, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { add, remove } from "../../../context/reducers/changeCountReducer";
 import "./SortedPlaces.css";
-import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 const MaleCardWrapper = (props) => {
   const currentDepartment = useSelector(
@@ -18,14 +17,6 @@ const MaleCardWrapper = (props) => {
       100
   );
   const dispatch = useDispatch();
-
-  // const handler = useCallback(() => {
-  //   dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
-  // }, [currentDepartment?.data?.id, dispatch])
-
-  // useEffect(() => {
-  //   handler()
-  // }, [dispatch, handler])
 
   return (
     <div className={"card"}>

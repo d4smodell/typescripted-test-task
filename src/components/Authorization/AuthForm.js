@@ -3,10 +3,10 @@ import { UserOutlined, LockOutlined, InfoCircleOutlined } from "@ant-design/icon
 import { connect, useSelector } from "react-redux";
 import { getInfo, login } from "../../context/reducers/authReducer";
 import { useState } from "react";
-import './AuthForm.css'
 import { AlertWrapper } from "./Alert";
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { ButtonWrapper } from "./Button";
+import './AuthForm.css'
 
 const LoginForm = (props) => {
   const isAuth = useSelector(state => state.login.isAuth);

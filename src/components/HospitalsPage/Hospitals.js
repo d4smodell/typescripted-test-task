@@ -5,15 +5,15 @@ import { Header } from "./Header/Header";
 import { PlacesInfo } from "./PlacesInfo/PlacesInfo";
 import { ModalButtons } from "./ModalButtons/ModalButtons";
 import { SortedPlaces } from "./SortedPlaces/SortedPlaces";
-import { HospitalsLocationContainer } from "./HospitalsLocation/HospitalsLocationContainer";
 import "./Content.css";
+import { HospitalsLocation } from "./HospitalsLocation/HospitalsLocation";
 
 const Hospitals = (props) => {
   return (
     <>
       <Header logout={props.logout} />
       <div className="container">
-        <HospitalsLocationContainer />
+        <HospitalsLocation />
         <PlacesInfo />
         <ModalButtons />
         <SortedPlaces />

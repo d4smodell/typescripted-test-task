@@ -3,7 +3,11 @@ import { changeCountAPI } from "../../api/api"
 const ADD_PATIENT = "ADD_PATIENT"
 const REMOVE_PATIENT = "REMOVE_PATIENT"
 
-export const  changeCountReducer = (state, action) => {
+const initialState = {
+    defValue: [1]
+}
+
+export const changeCountReducer = (state = initialState, action) => {
     switch(action.type) {
         case ADD_PATIENT:
             return {

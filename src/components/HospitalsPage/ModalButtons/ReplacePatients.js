@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button, Form, Radio, Select, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getDepartmentsThunk } from "../../../context/reducers/departmentsReducer";
 import { getInfo } from "../../../context/reducers/authReducer";
 import { replace } from "../../../context/reducers/replaceReducer";
 import "./ReplacePatients.css";
@@ -12,11 +11,6 @@ export const ReplacePatients = (props) => {
   const [visible, setVisible] = useState(false);
   const departments = useSelector((state) => state.departments.departments);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getDepartmentsThunk());
-  }, [dispatch]);
-
   const info = departments.data;
 
   const onFinish = ({ radio, radio_second, select }) => {
@@ -173,7 +167,7 @@ export const ReplacePatients = (props) => {
                   offset: 6,
                 }}
               >
-                <Button onClick={cancelHandler} type="primary" htmlType="reset">
+                <Button onClick={cancelHandler} htmlType="reset">
                   Отмена
                 </Button>
               </Form.Item>

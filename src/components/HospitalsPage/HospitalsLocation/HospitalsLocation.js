@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "../Content.css";
 import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
@@ -8,6 +8,8 @@ import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsR
 
 export const HospitalsLocation = (props) => {
   const singleDepartment = useSelector((state) => state.departments.department);
+  const departments = useSelector(state => state.departments.departments)
+  const info = departments?.data
 
   const dispatch = useDispatch();
 
@@ -16,15 +18,11 @@ export const HospitalsLocation = (props) => {
     dispatch(getSingleDepartmentThunk(key));
   };
 
-  useEffect(() => {
-    dispatch(getSingleDepartmentThunk(2));
-  }, [dispatch]);
-
   const menu = () => {
     return (
       <div>
         <Menu onClick={onClick}>
-          {props.info?.map((item) => {
+          {info?.map((item) => {
             return <Menu.Item key={item?.id}>{item.name}</Menu.Item>;
           })}
         </Menu>
@@ -35,7 +33,7 @@ export const HospitalsLocation = (props) => {
   return (
     <div className={"container"}>
       <div className={"info_els"}>
-        <Dropdown overlay={menu} info={props.info}>
+        <Dropdown overlay={menu} info={info}>
           <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
             {singleDepartment?.data?.name} <DownOutlined />
           </a>

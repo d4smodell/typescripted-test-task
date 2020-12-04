@@ -1,4 +1,4 @@
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AuthorizationPage from "./components/Authorization/AuthorizationPage";
 import Hospitals from "./components/HospitalsPage/Hospitals";
 import "./index.css";
@@ -6,8 +6,10 @@ import "./index.css";
 function App() {
   return (
     <BrowserRouter className="App">
-      <Route path="/hospitals" render={() => <Hospitals />} />
-      <Route exact path="/" render={() => <AuthorizationPage />} />
+      <Switch>
+        <Route exact path="/" render={() => <AuthorizationPage />} />
+        <Route path="/hospitals" render={() => <Hospitals />} />
+      </Switch>
     </BrowserRouter>
   );
 }

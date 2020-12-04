@@ -26,9 +26,9 @@ export const PatientDischarge = (props) => {
 
   const onFinish = (values) => {
     dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
     form.resetFields()
     setVisible(false);
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
   };
 
   return (

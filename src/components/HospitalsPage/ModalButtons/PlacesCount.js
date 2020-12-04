@@ -3,6 +3,7 @@ import { Modal, message, Input, Form, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { changeHospitalPlacesThunk } from "../../../context/reducers/hospitalPlacesReducer";
 import "./PlacesCount.css";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 export const PlacesCount = (props) => {
   const [form] = Form.useForm();
@@ -48,6 +49,7 @@ export const PlacesCount = (props) => {
       count_male_o2_free,
     };
     dispatch(changeHospitalPlacesThunk(payload));
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
     form.resetFields();
     setVisible(false);
   };

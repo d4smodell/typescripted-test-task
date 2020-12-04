@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getInfo } from "../../../context/reducers/authReducer";
 import { replace } from "../../../context/reducers/replaceReducer";
 import "./ReplacePatients.css";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 export const ReplacePatients = (props) => {
   const [form] = Form.useForm();
@@ -25,6 +26,7 @@ export const ReplacePatients = (props) => {
     };
     dispatch(getInfo());
     dispatch(replace(payload));
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
     form.resetFields();
     setVisible(false);
   };

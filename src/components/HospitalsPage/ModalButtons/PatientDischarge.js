@@ -5,6 +5,7 @@ import { Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { discharge } from "../../../context/reducers/bunkReleaseReducer";
 import "./PatientsDischarge.css";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 export const PatientDischarge = (props) => {
   const [visible, setVisible] = React.useState(false);
@@ -27,6 +28,7 @@ export const PatientDischarge = (props) => {
     dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
     form.resetFields()
     setVisible(false);
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
   };
 
   return (

@@ -26,7 +26,10 @@ const MaleCardWrapper = (props) => {
         <div className={"plus_min"}>
           <Button
             onClick={() =>
-              dispatch(remove(currentDepartment?.data?.id, 0, 1, "MALE", false))
+              {
+                dispatch(remove(currentDepartment?.data?.id, 0, 1, "MALE", false))
+                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+              }
             }
             size="large"
             type="primary"
@@ -47,7 +50,10 @@ const MaleCardWrapper = (props) => {
           </div>
           <Button
             onClick={() =>
-              dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", false))
+              {
+                dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", false))
+                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+              }
             }
             size="large"
             type="primary"
@@ -93,9 +99,10 @@ const FemaleCardWrapper = (props) => {
         <div className={"plus_min"}>
           <Button
             onClick={() =>
-              dispatch(
-                remove(currentDepartment?.data?.id, 0, 1, "FEMALE", false)
-              )
+              {
+                dispatch(remove(currentDepartment?.data?.id, 0, 1, "FEMALE", false))
+                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+              }
             }
             size="large"
             type="primary"
@@ -116,7 +123,10 @@ const FemaleCardWrapper = (props) => {
           </div>
           <Button
             onClick={() =>
-              dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", false))
+              {
+                dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", false))
+                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+              }
             }
             size="large"
             type="primary"
@@ -161,7 +171,10 @@ const MaleO2CardWrapper = (props) => {
         <div className={"plus_min"}>
           <Button
             onClick={() =>
+             {
               dispatch(remove(currentDepartment?.data?.id, 0, 1, "MALE", true))
+              dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+             }
             }
             size="large"
             type="primary"
@@ -183,7 +196,10 @@ const MaleO2CardWrapper = (props) => {
           </div>
           <Button
             onClick={() =>
-              dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", true))
+              {
+                dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", true))
+                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+              }
             }
             size="large"
             type="primary"
@@ -223,6 +239,7 @@ const FemaleO2CardWrapper = (props) => {
 
   const plusHandler = useCallback(() => {
     dispatch(remove(currentDepartment?.data?.id, 0, 1, "FEMALE", true));
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
   }, [currentDepartment?.data?.id, dispatch]);
 
   return (
@@ -252,7 +269,10 @@ const FemaleO2CardWrapper = (props) => {
           </div>
           <Button
             onClick={() =>
-              dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", true))
+              {
+                dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", true))
+                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+              }
             }
             size="large"
             type="primary"

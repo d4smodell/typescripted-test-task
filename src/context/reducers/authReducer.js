@@ -1,6 +1,5 @@
 import {
   CLEAR_USER_DATA,
-  ERROR_CATCHER,
   GET_ADDITIONAL_INFO,
   SET_USER_DATA,
 } from "../types";
@@ -11,7 +10,6 @@ const initialState = {
   password: null,
   info: null,
   isAuth: false,
-  error: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -26,12 +24,6 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         info: action.info,
-      };
-
-    case ERROR_CATCHER:
-      return {
-        ...state,
-        error: action.error,
       };
 
     case CLEAR_USER_DATA:
@@ -55,7 +47,6 @@ const clearUserData = () => ({
   isAuth: false,
 });
 
-export const errorCatcher = (error) => ({ type: ERROR_CATCHER, error });
 const getAdditionalInfo = (payload) => ({
   type: GET_ADDITIONAL_INFO,
   info: payload,
@@ -69,7 +60,6 @@ export const getInfo = () => async (dispatch) => {
 export const logout = () => async (dispatch) => {
   localStorage.clear();
   dispatch(clearUserData());
-  console.log(initialState.isAuth);
 };
 
 export const login = (username, password, isAuth) => async (dispatch) => {

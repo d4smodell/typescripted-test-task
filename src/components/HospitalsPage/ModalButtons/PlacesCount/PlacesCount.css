@@ -1,0 +1,27 @@
+.places_settings {
+    display: flex;
+}
+
+.places_settings input{
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+.places_settings h3 {
+    margin: 10px;
+}
+
+.places_count_modal h3 {
+    margin: 10px;
+}
+
+.form_btn span {
+    padding: 0px;
+    text-align: center;
+    display: inline;
+}
+
+.form_btn {
+    margin-left: 10px;
+}

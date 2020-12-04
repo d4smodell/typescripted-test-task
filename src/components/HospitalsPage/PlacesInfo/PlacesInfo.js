@@ -4,6 +4,7 @@ import '../Content.css'
 
 export const PlacesInfo = () => {
   const placesCount = useSelector(state => state.departments.department)
+  
   const free = placesCount?.data?.count_female_free +
   placesCount?.data?.count_female_o2_free + 
   placesCount?.data?.count_male_free +

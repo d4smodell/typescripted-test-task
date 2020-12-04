@@ -1,8 +1,8 @@
 import React from "react";
-import { PatientDischarge } from "./PatientDischarge";
-import { PlacesCount } from "./PlacesCount";
-import { ReplacePatients } from "./ReplacePatients";
-import { InfoModal } from "./InfoModal";
+import { PatientDischarge } from "./PatientDischarge/PatientDischarge";
+import { PlacesCount } from "./PlacesCount/PlacesCount";
+import { ReplacePatients } from "./ReplacePatients/ReplacePatients";
+import { InfoModal } from "./InfoModal/InfoModal";
 
 export const ModalButtons = (props) => {
   return (

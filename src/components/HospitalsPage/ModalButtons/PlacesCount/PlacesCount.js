@@ -1,9 +1,9 @@
 import React from "react";
 import { Modal, message, Input, Form, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { changeHospitalPlacesThunk } from "../../../context/reducers/hospitalPlacesReducer";
+import { changeHospitalPlacesThunk } from "../../../../context/reducers/hospitalPlacesReducer";
+import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
 import "./PlacesCount.css";
-import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 
 export const PlacesCount = (props) => {
   const [form] = Form.useForm();

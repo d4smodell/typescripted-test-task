@@ -7,30 +7,35 @@ import { add, remove } from "../../../context/reducers/changeCountReducer";
 import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 import "./SortedPlaces.css";
 
-const MaleCardWrapper = (props) => {
+const CardWrapper = ({
+  departmentId,
+  busyPercent,
+  free,
+  total,
+  title,
+  value,
+  secValue,
+  gender,
+  hasOxygen,
+}) => {
   const currentDepartment = useSelector(
     (state) => state.departments.department
   );
-  const busyPercent = Math.ceil(
-    (currentDepartment?.data?.count_male_busy /
-      (currentDepartment?.data?.count_male_busy +
-        currentDepartment?.data?.count_male_free)) *
-      100
-  );
+
   const dispatch = useDispatch();
 
   return (
     <div className={"card"}>
       <Card style={{ width: 424, height: 224 }}>
-        <h1>{props.title}</h1>
+        <h1>{title}</h1>
         <div className={"plus_min"}>
           <Button
-            onClick={() =>
-              {
-                dispatch(remove(currentDepartment?.data?.id, 0, 1, "MALE", false))
-                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-              }
-            }
+            onClick={() => {
+              dispatch(
+                remove(departmentId, value, secValue, gender, hasOxygen)
+              );
+              dispatch(getSingleDepartmentThunk(departmentId || 2));
+            }}
             size="large"
             type="primary"
             shape="circle"
@@ -49,12 +54,10 @@ const MaleCardWrapper = (props) => {
             </span>
           </div>
           <Button
-            onClick={() =>
-              {
-                dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", false))
-                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-              }
-            }
+            onClick={() => {
+              dispatch(add(departmentId, value, secValue, gender, hasOxygen));
+              dispatch(getSingleDepartmentThunk(departmentId || 2));
+            }}
             size="large"
             type="primary"
             shape="circle"
@@ -66,230 +69,10 @@ const MaleCardWrapper = (props) => {
         </div>
         <div>
           <label>
-            Свободно{" "}
-            <span style={{ color: " #1890FF" }}>{props.free || 0}</span>
+            Свободно <span style={{ color: " #1890FF" }}>{free || 0}</span>
           </label>
           <p>
-            Всего <span style={{ color: " #1890FF" }}>{props.total || 0}</span>
-          </p>
-        </div>
-      </Card>
-    </div>
-  );
-};
-
-const FemaleCardWrapper = (props) => {
-  const currentDepartment = useSelector(
-    (state) => state.departments.department
-  );
-
-  const busyPercent = Math.ceil(
-    (currentDepartment?.data?.count_female_busy /
-      (currentDepartment?.data?.count_female_busy +
-        currentDepartment?.data?.count_female_free)) *
-      100
-  );
-
-  const dispatch = useDispatch();
-
-  return (
-    <div className={"card"}>
-      <Card style={{ width: 424, height: 224 }}>
-        <h1>{props.title}</h1>
-        <div className={"plus_min"}>
-          <Button
-            onClick={() =>
-              {
-                dispatch(remove(currentDepartment?.data?.id, 0, 1, "FEMALE", false))
-                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-              }
-            }
-            size="large"
-            type="primary"
-            shape="circle"
-            icon={<MinusOutlined />}
-          />
-          <div style={{ background: "#F0F2F5", padding: "10px" }}>
-            <span style={{ fontSize: "14px" }}>Занято</span>{" "}
-            <span
-              style={{
-                background: "#fff",
-                padding: "10px 10px",
-                borderRadius: "10px",
-              }}
-            >
-              {currentDepartment?.data?.count_female_busy}
-            </span>
-          </div>
-          <Button
-            onClick={() =>
-              {
-                dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", false))
-                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-              }
-            }
-            size="large"
-            type="primary"
-            shape="circle"
-            icon={<PlusOutlined />}
-          />
-        </div>
-        <div className="progress_bar">
-          <Progress percent={busyPercent || 0} />
-        </div>
-        <div>
-          <label>
-            Свободно{" "}
-            <span style={{ color: " #1890FF" }}>{props.free || 0}</span>
-          </label>
-          <p>
-            Всего <span style={{ color: " #1890FF" }}>{props.total || 0}</span>
-          </p>
-        </div>
-      </Card>
-    </div>
-  );
-};
-
-const MaleO2CardWrapper = (props) => {
-  const currentDepartment = useSelector(
-    (state) => state.departments.department
-  );
-  const busyPercent = Math.ceil(
-    (currentDepartment?.data?.count_male_o2_busy /
-      (currentDepartment?.data?.count_male_o2_busy +
-        currentDepartment?.data?.count_male_o2_free)) *
-      100
-  );
-
-  const dispatch = useDispatch();
-
-  return (
-    <div className={"card"}>
-      <Card style={{ width: 424, height: 224 }}>
-        <h1>{props.title}</h1>
-        <div className={"plus_min"}>
-          <Button
-            onClick={() =>
-             {
-              dispatch(remove(currentDepartment?.data?.id, 0, 1, "MALE", true))
-              dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-             }
-            }
-            size="large"
-            type="primary"
-            shape="circle"
-            icon={<MinusOutlined />}
-          />
-          <div style={{ background: "#F0F2F5", padding: "10px" }}>
-            Занято{" "}
-            <span
-              style={{
-                background: "#fff",
-                padding: "10px 10px",
-                borderRadius: "10px",
-                fontSize: "16px",
-              }}
-            >
-              {currentDepartment?.data?.count_male_o2_busy}
-            </span>
-          </div>
-          <Button
-            onClick={() =>
-              {
-                dispatch(add(currentDepartment?.data?.id, 0, 1, "MALE", true))
-                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-              }
-            }
-            size="large"
-            type="primary"
-            shape="circle"
-            icon={<PlusOutlined />}
-          />
-        </div>
-        <div className="progress_bar">
-          <Progress percent={busyPercent || 0} />
-        </div>
-        <div>
-          <label>
-            Свободно{" "}
-            <span style={{ color: " #1890FF" }}>{props.free || 0}</span>
-          </label>
-          <p>
-            Всего <span style={{ color: " #1890FF" }}>{props.total || 0}</span>
-          </p>
-        </div>
-      </Card>
-    </div>
-  );
-};
-
-const FemaleO2CardWrapper = (props) => {
-  const currentDepartment = useSelector(
-    (state) => state.departments.department
-  );
-  const busyPercent = Math.ceil(
-    (currentDepartment?.data?.count_female_o2_busy /
-      (currentDepartment?.data?.count_female_o2_busy +
-        currentDepartment?.data?.count_female_o2_free)) *
-      100
-  );
-
-  const dispatch = useDispatch();
-
-  const plusHandler = useCallback(() => {
-    dispatch(remove(currentDepartment?.data?.id, 0, 1, "FEMALE", true));
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-  }, [currentDepartment?.data?.id, dispatch]);
-
-  return (
-    <div className={"card"}>
-      <Card style={{ width: 424, height: 224 }}>
-        <h1>{props.title}</h1>
-        <div className={"plus_min"}>
-          <Button
-            onClick={() => plusHandler()}
-            size="large"
-            type="primary"
-            shape="circle"
-            icon={<MinusOutlined />}
-          />
-          <div style={{ background: "#F0F2F5", padding: "10px" }}>
-            Занято{" "}
-            <span
-              style={{
-                background: "#fff",
-                padding: "10px 10px",
-                borderRadius: "10px",
-                fontSize: "16px",
-              }}
-            >
-              {currentDepartment?.data?.count_female_o2_busy}
-            </span>
-          </div>
-          <Button
-            onClick={() =>
-              {
-                dispatch(add(currentDepartment?.data?.id, 0, 1, "FEMALE", true))
-                dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-              }
-            }
-            size="large"
-            type="primary"
-            shape="circle"
-            icon={<PlusOutlined />}
-          />
-        </div>
-        <div className="progress_bar">
-          <Progress percent={busyPercent || 0} />
-        </div>
-        <div>
-          <label>
-            Свободно{" "}
-            <span style={{ color: " #1890FF" }}>{props.free || 0}</span>
-          </label>
-          <p>
-            Всего <span style={{ color: " #1890FF" }}>{props.total || 0}</span>
+            Всего <span style={{ color: " #1890FF" }}>{total || 0}</span>
           </p>
         </div>
       </Card>
@@ -318,6 +101,34 @@ export const SortedPlaces = (props) => {
     placesCount?.data?.count_female_o2_free +
     placesCount?.data?.count_female_o2_busy;
 
+  const maleBusyPercent = Math.ceil(
+    (placesCount?.data?.count_male_busy /
+      (placesCount?.data?.count_male_busy +
+        placesCount?.data?.count_male_free)) *
+      100
+  );
+
+  const femaleBusyPercent = Math.ceil(
+    (placesCount?.data?.count_female_busy /
+      (placesCount?.data?.count_female_busy +
+        placesCount?.data?.count_female_free)) *
+      100
+  );
+
+  const maleO2BusyPercent = Math.ceil(
+    (placesCount?.data?.count_male_o2_busy /
+      (placesCount?.data?.count_male_o2_busy +
+        placesCount?.data?.count_male_o2_free)) *
+      100
+  );
+
+  const femaleO2BusyPercent = Math.ceil(
+    (placesCount?.data?.count_female_o2_busy /
+      (placesCount?.data?.count_female_o2_busy +
+        placesCount?.data?.count_female_o2_free)) *
+      100
+  );
+
   const dispatch = useDispatch();
   const handler = useCallback(() => {
     dispatch(getSingleDepartmentThunk(placesCount?.data?.id || 2));
@@ -329,21 +140,52 @@ export const SortedPlaces = (props) => {
 
   return (
     <div className={"card_container"}>
-      <MaleCardWrapper title={"Мужские"} free={maleFree} total={maleTotal} />
-      <FemaleCardWrapper
-        title={"Женские"}
+      <CardWrapper
+        departmentId={placesCount?.data?.id}
+        busyPercent={maleBusyPercent}
+        free={maleFree}
+        total={maleTotal}
+        title={"Мужские"}
+        value={0}
+        secValue={1}
+        gender={"MALE"}
+        hasOxygen={false}
+      />
+
+      <CardWrapper
+        departmentId={placesCount?.data?.id}
+        busyPercent={femaleBusyPercent}
         free={femaleFree}
         total={femaleTotal}
+        title={"Женские"}
+        value={0}
+        secValue={1}
+        gender={"FEMALE"}
+        hasOxygen={false}
       />
-      <MaleO2CardWrapper
-        title={"Мужские с кислородом"}
+
+      <CardWrapper
+        departmentId={placesCount?.data?.id}
+        busyPercent={maleO2BusyPercent}
         free={maleO2Free}
         total={maleO2Total}
+        title={"Мужские с кислородом"}
+        value={0}
+        secValue={1}
+        gender={"MALE"}
+        hasOxygen={true}
       />
-      <FemaleO2CardWrapper
-        title={"Женские с кислородом"}
+
+      <CardWrapper
+        departmentId={placesCount?.data?.id}
+        busyPercent={femaleO2BusyPercent}
         free={femaleO2Free}
         total={femaleO2Total}
+        title={"Женские с кислородом"}
+        value={0}
+        secValue={1}
+        gender={"FEMALE"}
+        hasOxygen={true}
       />
     </div>
   );

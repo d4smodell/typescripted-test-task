@@ -3,7 +3,7 @@ import { Button } from "antd";
 import { Modal } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import "./PlacesCount.css";
+import "./InfoModal.css";
 
 export const InfoModal = (props) => {
   const otherDepartment = useSelector((state) => state.departments.departments);

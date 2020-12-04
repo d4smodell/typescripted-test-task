@@ -62,7 +62,7 @@ export const PatientDischarge = (props) => {
                     </Radio>
                     <Radio
                       value={{
-                        sex: "MALE",
+                        sex: "FEMALE",
                         has_oxygen: false,
                         department_id: currentDepartment?.data?.id,
                       }}
@@ -72,7 +72,7 @@ export const PatientDischarge = (props) => {
                     <Radio
                       value={{
                         sex: "MALE",
-                        has_oxygen: false,
+                        has_oxygen: true,
                         department_id: currentDepartment?.data?.id,
                       }}
                     >
@@ -80,8 +80,8 @@ export const PatientDischarge = (props) => {
                     </Radio>
                     <Radio
                       value={{
-                        sex: "MALE",
-                        has_oxygen: false,
+                        sex: "FEMALE",
+                        has_oxygen: true,
                         department_id: currentDepartment?.data?.id,
                       }}
                     >

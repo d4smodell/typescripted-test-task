@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal, message, Input, Form, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { changeHospitalPlacesThunk } from "../../../../context/reducers/hospitalPlacesReducer";
 import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
+import { changeHospitalPlaces } from "../../../../api/api";
 import "./PlacesCount.css";
 
 export const PlacesCount = (props) => {
@@ -49,7 +49,7 @@ export const PlacesCount = (props) => {
       count_male_o2_free,
     };
 
-     dispatch(changeHospitalPlacesThunk(payload)).then(
+    changeHospitalPlaces.changePlaces(payload).then(
       dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
     );
     setVisible(false);

@@ -3,10 +3,9 @@ import { Form, Button } from "antd";
 import { Modal } from "antd";
 import { Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { discharge } from "../../../../context/reducers/bunkReleaseReducer";
 import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
-import "./PatientsDischarge.css";
 import { bunkReleaseAPI } from "../../../../api/api";
+import "./PatientsDischarge.css";
 
 export const PatientDischarge = (props) => {
   const [visible, setVisible] = React.useState(false);

@@ -2,10 +2,9 @@ import { useState } from "react";
 import { Button, Form, Radio, Select, Modal } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getInfo } from "../../../../context/reducers/authReducer";
-import { replace } from "../../../../context/reducers/replaceReducer";
 import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
-import "./ReplacePatients.css";
 import { replaceAPI } from "../../../../api/api";
+import "./ReplacePatients.css";
 
 export const ReplacePatients = (props) => {
   const [form] = Form.useForm();

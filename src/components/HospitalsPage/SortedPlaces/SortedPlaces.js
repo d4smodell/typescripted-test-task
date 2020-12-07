@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import { Card } from "antd";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { Progress, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { add, remove } from "../../../context/reducers/changeCountReducer";
 import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
+import { changeCountAPI } from "../../../api/api";
 import "./SortedPlaces.css";
 
 const CardWrapper = ({
@@ -17,7 +17,7 @@ const CardWrapper = ({
   secValue,
   gender,
   hasOxygen,
-  busy
+  busy,
 }) => {
   const dispatch = useDispatch();
 
@@ -28,24 +28,23 @@ const CardWrapper = ({
         <div className={"plus_min"}>
           <Button
             onClick={() => {
-              dispatch(
-                remove(departmentId, value, secValue, gender, hasOxygen)
-              );
-              dispatch(getSingleDepartmentThunk(departmentId));
+              changeCountAPI.remove(departmentId, value, secValue, gender, hasOxygen)
+              .then(dispatch(getSingleDepartmentThunk(departmentId)))
             }}
             size="large"
             type="primary"
             shape="circle"
             icon={<MinusOutlined />}
           />
-          <div style={{ background: "#F0F2F5", padding: "10px 2px 10px 10px"}}>
-            Занято {" "}
+          <div style={{ background: "#F0F2F5", padding: "10px 2px 10px 10px" }}>
+            Занято{" "}
             <span
               style={{
                 background: "#fff",
                 padding: "12px 10px 12px 10px",
                 borderRadius: "10px",
-                boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.12)'
+                boxShadow:
+                  "inset 0 1px 1px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.12)",
               }}
             >
               {busy || 0}
@@ -53,8 +52,8 @@ const CardWrapper = ({
           </div>
           <Button
             onClick={() => {
-              dispatch(add(departmentId, value, secValue, gender, hasOxygen));
-              dispatch(getSingleDepartmentThunk(departmentId));
+              changeCountAPI.add(departmentId, value, secValue, gender, hasOxygen)
+              .then(dispatch(getSingleDepartmentThunk(departmentId)))
             }}
             size="large"
             type="primary"
@@ -130,17 +129,6 @@ export const SortedPlaces = (props) => {
         placesCount?.data?.count_female_o2_free)) *
       100
   );
-
-  const dispatch = useDispatch();
-  const handler = useCallback(() => {
-    dispatch(getSingleDepartmentThunk(placesCount?.data?.id || 2));
-  }, [dispatch, placesCount?.data?.id]);
-
-  useEffect(() => {
-    handler();
-  }, [handler]);
-
-  console.log(placesCount)
 
   return (
     <div className={"card_container"}>

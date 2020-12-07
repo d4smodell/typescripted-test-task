@@ -25,12 +25,13 @@ export const authAPI = {
     } catch (e) {
       if (e) {
         message.error({
-          content: 'Неверный логин или пароль! Пожалуйста проверьте правильность введенных данных и повторите попытку',
-          className: 'custom-class',
+          content:
+            "Неверный логин или пароль! Пожалуйста проверьте правильность введенных данных и повторите попытку",
+          className: "custom-class",
           icon: null,
           style: {
-            marginTop: '69vh',
-            marginRight: '85vh',
+            marginTop: "69vh",
+            marginRight: "85vh",
           },
         });
       }
@@ -104,7 +105,7 @@ export const departmentsAPI = {
       );
       return response;
     } catch (e) {
-      if (e) message.error(e)
+      if (e) message.error(e);
     }
   },
 };
@@ -121,26 +122,32 @@ export const changeHospitalPlaces = {
     count_male_free,
     count_male_o2_free,
   }) {
-    const response = await instance.post(
-      `api/hospitals/bunks/multiple_change/`,
-      {
-        department_id,
-        count_female_busy,
-        count_female_o2_busy,
-        count_female_free,
-        count_female_o2_free,
-        count_male_busy,
-        count_male_o2_busy,
-        count_male_free,
-        count_male_o2_free,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access")}`,
-        },
-      }
-    );
-    return response;
+    try {
+        const response = await instance.post(
+          `api/hospitals/bunks/multiple_change/`,
+          {
+            department_id,
+            count_female_busy,
+            count_female_o2_busy,
+            count_female_free,
+            count_female_o2_free,
+            count_male_busy,
+            count_male_o2_busy,
+            count_male_free,
+            count_male_o2_free,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("access")}`,
+            },
+          }
+        );
+        message.info(response.data);
+        return response;
+    } catch (e) {
+      const err = JSON.stringify(e)
+      if(e) message.error(err)
+    }
   },
 };
 
@@ -156,10 +163,10 @@ export const bunkReleaseAPI = {
           },
         }
       );
-      message.info(response.data)
+      message.info(response.data);
       return response;
     } catch (e) {
-      if (e) message.error(e)
+      if (e) message.error(e);
     }
   },
 };
@@ -192,7 +199,7 @@ export const replaceAPI = {
           },
         }
       );
-      message.info(response.data)
+      message.info(response.data);
       return response;
     } catch (e) {
       if (e) message.error(e);

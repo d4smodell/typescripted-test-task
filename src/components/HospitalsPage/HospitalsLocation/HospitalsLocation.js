@@ -19,6 +19,7 @@ export const HospitalsLocation = (props) => {
 
   const getDepartment = ({ key }) => {
     dispatch(getSingleDepartmentThunk(key));
+    console.log(info[0].id)
   };
 
   const menu = () => {

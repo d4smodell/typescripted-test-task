@@ -17,11 +17,8 @@ const CardWrapper = ({
   secValue,
   gender,
   hasOxygen,
+  busy
 }) => {
-  const currentDepartment = useSelector(
-    (state) => state.departments.department
-  );
-
   const dispatch = useDispatch();
 
   return (
@@ -34,29 +31,30 @@ const CardWrapper = ({
               dispatch(
                 remove(departmentId, value, secValue, gender, hasOxygen)
               );
-              dispatch(getSingleDepartmentThunk(departmentId || 2));
+              dispatch(getSingleDepartmentThunk(departmentId));
             }}
             size="large"
             type="primary"
             shape="circle"
             icon={<MinusOutlined />}
           />
-          <div style={{ background: "#F0F2F5", padding: "10px" }}>
-            Занято{" "}
+          <div style={{ background: "#F0F2F5", padding: "10px 2px 10px 10px"}}>
+            Занято {" "}
             <span
               style={{
                 background: "#fff",
-                padding: "10px 10px",
+                padding: "12px 10px 12px 10px",
                 borderRadius: "10px",
+                boxShadow: 'inset 0 1px 1px rgba(0,0,0,0.1), 0 1px 1px rgba(0,0,0,0.12)'
               }}
             >
-              {currentDepartment?.data?.count_male_busy}
+              {busy || 0}
             </span>
           </div>
           <Button
             onClick={() => {
               dispatch(add(departmentId, value, secValue, gender, hasOxygen));
-              dispatch(getSingleDepartmentThunk(departmentId || 2));
+              dispatch(getSingleDepartmentThunk(departmentId));
             }}
             size="large"
             type="primary"
@@ -84,19 +82,23 @@ export const SortedPlaces = (props) => {
   const placesCount = useSelector((state) => state.departments.department);
 
   const maleFree = placesCount?.data?.count_male_free;
+  const maleBusy = placesCount?.data?.count_male_busy;
   const maleTotal =
     placesCount?.data?.count_male_free + placesCount?.data?.count_male_busy;
 
   const femaleFree = placesCount?.data?.count_female_free;
+  const femaleBusy = placesCount?.data?.count_female_busy;
   const femaleTotal =
     placesCount?.data?.count_female_free + placesCount?.data?.count_female_busy;
 
   const maleO2Free = placesCount?.data?.count_male_o2_free;
+  const maleO2Busy = placesCount?.data?.count_male_o2_busy;
   const maleO2Total =
     placesCount?.data?.count_male_o2_free +
     placesCount?.data?.count_male_o2_busy;
 
   const femaleO2Free = placesCount?.data?.count_female_o2_free;
+  const femaleO2Busy = placesCount?.data?.count_female_o2_busy;
   const femaleO2Total =
     placesCount?.data?.count_female_o2_free +
     placesCount?.data?.count_female_o2_busy;
@@ -138,6 +140,8 @@ export const SortedPlaces = (props) => {
     handler();
   }, [handler]);
 
+  console.log(placesCount)
+
   return (
     <div className={"card_container"}>
       <CardWrapper
@@ -150,6 +154,7 @@ export const SortedPlaces = (props) => {
         secValue={1}
         gender={"MALE"}
         hasOxygen={false}
+        busy={maleBusy}
       />
 
       <CardWrapper
@@ -162,6 +167,7 @@ export const SortedPlaces = (props) => {
         secValue={1}
         gender={"FEMALE"}
         hasOxygen={false}
+        busy={femaleBusy}
       />
 
       <CardWrapper
@@ -174,6 +180,7 @@ export const SortedPlaces = (props) => {
         secValue={1}
         gender={"MALE"}
         hasOxygen={true}
+        busy={maleO2Busy}
       />
 
       <CardWrapper
@@ -186,6 +193,7 @@ export const SortedPlaces = (props) => {
         secValue={1}
         gender={"FEMALE"}
         hasOxygen={true}
+        busy={femaleO2Busy}
       />
     </div>
   );

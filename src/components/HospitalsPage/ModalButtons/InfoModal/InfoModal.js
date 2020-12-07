@@ -25,6 +25,10 @@ export const InfoModal = (props) => {
       setVisible(false);
   };
 
+  const cancelHandler = () => {
+    setVisible(false);
+  };
+
   return (
     <div className={"patients_button"}>
       <Button size={"large"} onClick={showModal}>
@@ -38,6 +42,7 @@ export const InfoModal = (props) => {
           title="Информация о других отделениях"
           visible={visible}
           onOk={handleOk}
+          onCancel={cancelHandler}
           footer={[
             <Button onClick={handleOk}>Закрыть</Button>
           ]}

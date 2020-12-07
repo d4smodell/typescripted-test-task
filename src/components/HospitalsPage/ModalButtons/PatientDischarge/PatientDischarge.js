@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { discharge } from "../../../../context/reducers/bunkReleaseReducer";
 import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
 import "./PatientsDischarge.css";
+import { bunkReleaseAPI } from "../../../../api/api";
 
 export const PatientDischarge = (props) => {
   const [visible, setVisible] = React.useState(false);
@@ -25,8 +26,9 @@ export const PatientDischarge = (props) => {
   };
 
   const onFinish = (values) => {
-    dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+    bunkReleaseAPI.releaseBunk(values.radio.sex, values.radio.has_oxygen, values.radio.department_id)
+    // dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
+    .then(dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)))
     form.resetFields()
     setVisible(false);
   };

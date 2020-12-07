@@ -5,6 +5,7 @@ import { getInfo } from "../../../../context/reducers/authReducer";
 import { replace } from "../../../../context/reducers/replaceReducer";
 import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
 import "./ReplacePatients.css";
+import { replaceAPI } from "../../../../api/api";
 
 export const ReplacePatients = (props) => {
   const [form] = Form.useForm();
@@ -24,9 +25,11 @@ export const ReplacePatients = (props) => {
       to_department_id: select,
       count: 1,
     };
-    dispatch(getInfo());
-    dispatch(replace(payload));
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
+    dispatch(getInfo()).then(
+      replaceAPI.replacePatients(payload).then(
+        dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+      )
+    )
     form.resetFields();
     setVisible(false);
   };
@@ -56,6 +59,7 @@ export const ReplacePatients = (props) => {
           title="Перевод пациентов"
           visible={visible}
           footer={null}
+          onCancel={cancelHandler}
         >
           <h3>Выберите пациента в вашем отделении</h3>
           <Form form={form} name="validate_other" onFinish={onFinish}>

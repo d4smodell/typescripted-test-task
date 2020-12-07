@@ -7,13 +7,13 @@ const initialState = {
 }
 
 export const departmentsReducer = (state = initialState, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case GET_DEPARTMENTS:
             return {
                 ...state,
                 departments: action.departments
             }
-        
+
         case GET_SINGLE_DEPARTMENT:
             return {
                 ...state,
@@ -25,9 +25,9 @@ export const departmentsReducer = (state = initialState, action) => {
     }
 }
 
-const getDepartments = payload => ({type: GET_DEPARTMENTS, departments: payload})
+const getDepartments = payload => ({ type: GET_DEPARTMENTS, departments: payload })
 
-const getSingleDepartment = payload => ({type: GET_SINGLE_DEPARTMENT, department: payload})
+const getSingleDepartment = payload => ({ type: GET_SINGLE_DEPARTMENT, department: payload })
 
 export const getDepartmentsThunk = () => async dispatch => {
     const response = await departmentsAPI.getDepartments()

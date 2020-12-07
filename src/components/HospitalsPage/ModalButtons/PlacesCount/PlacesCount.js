@@ -15,6 +15,7 @@ export const PlacesCount = (props) => {
   const dispatch = useDispatch();
 
   const showModal = () => {
+    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
     setVisible(true);
   };
 
@@ -24,7 +25,6 @@ export const PlacesCount = (props) => {
 
   const handleCancel = () => {
     setVisible(false);
-    form.resetFields();
   };
 
   const onFinish = ({
@@ -48,9 +48,10 @@ export const PlacesCount = (props) => {
       count_male_free,
       count_male_o2_free,
     };
-    dispatch(changeHospitalPlacesThunk(payload));
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-    form.resetFields();
+
+     dispatch(changeHospitalPlacesThunk(payload)).then(
+      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+    );
     setVisible(false);
   };
 
@@ -63,11 +64,9 @@ export const PlacesCount = (props) => {
     if (
       value >
       currentDepartment?.data?.count_male_busy +
-        currentDepartment?.data?.count_male_free
+      currentDepartment?.data?.count_male_free
     ) {
       console.log("Wrong value");
-    } else if (!value) {
-      console.log("Enter value");
     } else {
       callback();
     }
@@ -77,11 +76,9 @@ export const PlacesCount = (props) => {
     if (
       value >
       currentDepartment?.data?.count_female_busy +
-        currentDepartment?.data?.count_female_free
+      currentDepartment?.data?.count_female_free
     ) {
       console.log("Wrong value");
-    } else if (!value) {
-      console.log("Enter value");
     } else {
       callback();
     }
@@ -91,11 +88,9 @@ export const PlacesCount = (props) => {
     if (
       value >
       currentDepartment?.data?.count_male_o2_busy +
-        currentDepartment?.data?.count_male_o2_free
+      currentDepartment?.data?.count_male_o2_free
     ) {
       console.log("Wrong value");
-    } else if (!value) {
-      console.log("Enter value");
     } else {
       callback();
     }
@@ -105,11 +100,9 @@ export const PlacesCount = (props) => {
     if (
       value >
       currentDepartment?.data?.count_female_o2_busy +
-        currentDepartment?.data?.count_female_o2_free
+      currentDepartment?.data?.count_female_o2_free
     ) {
       console.log("Wrong value");
-    } else if (!value) {
-      console.log("Enter value");
     } else {
       callback();
     }
@@ -132,10 +125,17 @@ export const PlacesCount = (props) => {
             form={form}
             name="places_count"
             onFinish={onFinish}
-            initialValues={{
-              remember: false,
-            }}
             onFinishFailed={onFinishFailed}
+            initialValues={{
+              count_male_free: currentDepartment?.data?.count_male_free,
+              count_male_busy: currentDepartment?.data?.count_male_busy,
+              count_female_free: currentDepartment?.data?.count_female_free,
+              count_female_busy: currentDepartment?.data?.count_female_busy,
+              count_male_o2_free: currentDepartment?.data?.count_male_o2_free,
+              count_male_o2_busy: currentDepartment?.data?.count_male_o2_busy,
+              count_female_o2_free: currentDepartment?.data?.count_female_o2_free,
+              count_female_o2_busy: currentDepartment?.data?.count_female_o2_busy,
+            }}
           >
             <h3>Мужские</h3>
             <div className={"places_settings"}>
@@ -144,11 +144,11 @@ export const PlacesCount = (props) => {
                   <label>Свободно</label>
                   <Form.Item
                     name={"count_male_free"}
-                    rules={[
-                      { required: true, min: 1, validator: maleValidation },
-                    ]}
+                    rules={[{
+                      validator: maleValidation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_male_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -157,11 +157,11 @@ export const PlacesCount = (props) => {
                   <label>Занято</label>
                   <Form.Item
                     name={"count_male_busy"}
-                    rules={[
-                      { required: true, min: 1, validator: maleValidation },
-                    ]}
+                    rules={[{
+                      validator: maleValidation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_male_busy} />
                   </Form.Item>
                 </div>
               </div>
@@ -174,11 +174,11 @@ export const PlacesCount = (props) => {
                   <label>Свободно</label>
                   <Form.Item
                     name={"count_female_free"}
-                    rules={[
-                      { required: true, min: 1, validator: femaleValidation },
-                    ]}
+                    rules={[{
+                      validator: femaleValidation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_female_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -187,11 +187,11 @@ export const PlacesCount = (props) => {
                   <label>Занято</label>
                   <Form.Item
                     name={"count_female_busy"}
-                    rules={[
-                      { required: true, min: 1, validator: femaleValidation },
-                    ]}
+                    rules={[{
+                      validator: femaleValidation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_female_busy} />
                   </Form.Item>
                 </div>
               </div>
@@ -204,11 +204,11 @@ export const PlacesCount = (props) => {
                   <label>Свободно</label>
                   <Form.Item
                     name={"count_male_o2_free"}
-                    rules={[
-                      { required: true, min: 1, validator: maleO2Validation },
-                    ]}
+                    rules={[{
+                      validator: maleO2Validation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_male_o2_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -217,11 +217,11 @@ export const PlacesCount = (props) => {
                   <label>Занято</label>
                   <Form.Item
                     name={"count_male_o2_busy"}
-                    rules={[
-                      { required: true, min: 1, validator: maleO2Validation },
-                    ]}
+                    rules={[{
+                      validator: maleO2Validation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_male_o2_busy} />
                   </Form.Item>
                 </div>
               </div>
@@ -234,11 +234,11 @@ export const PlacesCount = (props) => {
                   <label>Свободно</label>
                   <Form.Item
                     name={"count_female_o2_free"}
-                    rules={[
-                      { required: true, min: 1, validator: femaleO2Validation },
-                    ]}
+                    rules={[{
+                      validator: femaleO2Validation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_female_o2_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -247,11 +247,11 @@ export const PlacesCount = (props) => {
                   <label>Занято</label>
                   <Form.Item
                     name={"count_female_o2_busy"}
-                    rules={[
-                      { required: true, min: 1, validator: femaleO2Validation },
-                    ]}
+                    rules={[{
+                      validator: femaleO2Validation
+                    }]}
                   >
-                    <Input placeholder="" />
+                    <Input defaultValue={currentDepartment?.data?.count_female_o2_busy} />
                   </Form.Item>
                 </div>
               </div>

@@ -23,7 +23,7 @@ export const authAPI = {
       localStorage.setItem("username", username);
       return response;
     } catch (e) {
-      if(e) {
+      if (e) {
         message.error({
           content: 'Неверный логин или пароль! Пожалуйста проверьте правильность введенных данных и повторите попытку',
           className: 'custom-class',
@@ -73,7 +73,7 @@ export const additionInfoAPI = {
       });
       return response;
     } catch (e) {
-      if (e) console.log(e);;
+      if (e) message.error(e);
     }
   },
 };
@@ -88,7 +88,7 @@ export const departmentsAPI = {
       });
       return response;
     } catch (e) {
-      if (e) console.log(e);
+      if (e) message.error(e);
     }
   },
 
@@ -104,7 +104,7 @@ export const departmentsAPI = {
       );
       return response;
     } catch (e) {
-      if(e) console.log(e)
+      if (e) message.error(e)
     }
   },
 };
@@ -156,9 +156,10 @@ export const bunkReleaseAPI = {
           },
         }
       );
+      message.info(response.data)
       return response;
     } catch (e) {
-      if(e) console.log(e)
+      if (e) message.error(e)
     }
   },
 };
@@ -191,9 +192,10 @@ export const replaceAPI = {
           },
         }
       );
+      message.info(response.data)
       return response;
     } catch (e) {
-      if (e) throw e;
+      if (e) message.error(e);
     }
   },
 };
@@ -225,35 +227,3 @@ export const changeCountAPI = {
     return response;
   },
 };
-
-export const errorHandler = (error) => {
-  if (error?.status === 401) {
-    instance
-      .post(
-        "api/users/token/refresh/",
-        {
-          refresh: localStorage.getItem("refresh"),
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
-      )
-      .then((response) => {
-        localStorage.setItem("access", response.data.access);
-        error.config.Authorization = `Bearer ${localStorage.getItem("access")}`;
-        instance(error);
-      })
-      .catch((error) => {
-        sessionStorage.setItem("redirect_to", "/");
-        window.location = "/guest";
-        return Promise.reject(error);
-      });
-  } else {
-    return Promise.reject(error);
-  }
-};
-
-// T54321oikb

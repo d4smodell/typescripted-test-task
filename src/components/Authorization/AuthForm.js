@@ -1,18 +1,23 @@
 import { Form, Input } from "antd";
 import { UserOutlined, LockOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { connect } from "react-redux";
+import { connect, useDispatch, useSelector } from "react-redux";
 import { getInfo, login } from "../../context/reducers/authReducer";
 import { useState } from "react";
 import { AlertWrapper } from "./Alert";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { ButtonWrapper } from "./Button";
 import { useHistory } from "react-router-dom";
+import { getSingleDepartmentThunk } from "../../context/reducers/departmentsReducer";
 import "./AuthForm.css";
 
 const LoginForm = (props) => {
   const [alert, setAlert] = useState(false);
 
   const history = useHistory();
+
+  const dispatch = useDispatch()
+
+  const currentDepartment = useSelector(state => state.departments)
   
   const onFinish = (payload) => {
     try {
@@ -22,6 +27,7 @@ const LoginForm = (props) => {
       if (username) {
         history.push("/hospitals");
       } 
+      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
     } catch(e) {
       if(e) {
         setAlert(true);

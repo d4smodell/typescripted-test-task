@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, message, Input, Form, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
+import { getDepartmentsThunk, getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
 import { changeHospitalPlaces } from "../../../../api/api";
 import "./PlacesCount.css";
 
@@ -15,8 +15,9 @@ export const PlacesCount = (props) => {
   const dispatch = useDispatch();
 
   const showModal = () => {
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
-    setVisible(true);
+    dispatch(getDepartmentsThunk())
+    .then(dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)))
+    .then(setVisible(true))
   };
 
   const error = () => {
@@ -66,7 +67,7 @@ export const PlacesCount = (props) => {
       currentDepartment?.data?.count_male_busy +
       currentDepartment?.data?.count_male_free
     ) {
-      console.log("Wrong value");
+      message.error("Неверное значение!");
     } else {
       callback();
     }
@@ -78,7 +79,7 @@ export const PlacesCount = (props) => {
       currentDepartment?.data?.count_female_busy +
       currentDepartment?.data?.count_female_free
     ) {
-      console.log("Wrong value");
+      message.error("Неверное значение!");
     } else {
       callback();
     }
@@ -90,7 +91,7 @@ export const PlacesCount = (props) => {
       currentDepartment?.data?.count_male_o2_busy +
       currentDepartment?.data?.count_male_o2_free
     ) {
-      console.log("Wrong value");
+      message.error("Неверное значение!");
     } else {
       callback();
     }
@@ -102,7 +103,7 @@ export const PlacesCount = (props) => {
       currentDepartment?.data?.count_female_o2_busy +
       currentDepartment?.data?.count_female_o2_free
     ) {
-      console.log("Wrong value");
+      message.error("Неверное значение!");
     } else {
       callback();
     }

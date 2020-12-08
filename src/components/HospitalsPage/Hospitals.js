@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { logout } from "../../context/reducers/authReducer";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { Header } from "./Header/Header";
@@ -7,18 +7,27 @@ import { ModalButtons } from "./ModalButtons/ModalButtons";
 import { SortedPlaces } from "./SortedPlaces/SortedPlaces";
 import { HospitalsLocation } from "./HospitalsLocation/HospitalsLocation";
 import { Spin } from "antd";
-import { getSingleDepartmentThunk } from "../../context/reducers/departmentsReducer";
+import { getDepartmentsThunk, getSingleDepartmentThunk } from "../../context/reducers/departmentsReducer";
 import "./Content.css";
 
 const Hospitals = (props) => {
-  const currentDepartment = useSelector(
-    (state) => state.departments.department
-  );
+  const currentDepartment = useSelector(state => state.departments.department);
+  const departments = useSelector(state => state.departments.departments)
+  const [spin, setSpin] = useState(false)
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getDepartmentsThunk())
+  }, [dispatch])
+
   const handler = useCallback(() => {
-    dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || 2));
-  }, [dispatch, currentDepartment?.data?.id]);
+    if(departments?.data) {
+      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || departments?.data[0].id));
+    } else {
+      setSpin(true)
+    }
+  }, [dispatch, currentDepartment?.data?.id, departments?.data]);
 
   useEffect(() => {
     handler();
@@ -27,7 +36,7 @@ const Hospitals = (props) => {
   return (
     <>
       <Header logout={props.logout} />
-      {currentDepartment?.data?.id ? (
+      {departments?.data ? (
         <div className="container">
           <HospitalsLocation />
           <PlacesInfo />

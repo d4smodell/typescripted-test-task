@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Menu, Dropdown } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import { AimOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { getDepartmentsThunk, getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
+import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsReducer";
 import "../Content.css";
 
 export const HospitalsLocation = (props) => {
@@ -13,13 +13,8 @@ export const HospitalsLocation = (props) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getDepartmentsThunk())  
-  }, [dispatch])
-
   const getDepartment = ({ key }) => {
     dispatch(getSingleDepartmentThunk(key));
-    console.log(info[0].id)
   };
 
   const menu = () => {

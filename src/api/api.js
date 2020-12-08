@@ -24,6 +24,8 @@ export const authAPI = {
       return response;
     } catch (e) {
       if (e) {
+        const err = JSON.stringify(e)
+        console.log(err)
         message.error({
           content:
             "Неверный логин или пароль! Пожалуйста проверьте правильность введенных данных и повторите попытку",
@@ -74,7 +76,8 @@ export const additionInfoAPI = {
       });
       return response;
     } catch (e) {
-      if (e) message.error(e);
+      const err = JSON.stringify(e)
+      if (e) console.log(err);
     }
   },
 };
@@ -89,7 +92,8 @@ export const departmentsAPI = {
       });
       return response;
     } catch (e) {
-      if (e) message.error(e);
+      const err = JSON.stringify(e)
+      if (e) console.log(err);
     }
   },
 
@@ -105,7 +109,8 @@ export const departmentsAPI = {
       );
       return response;
     } catch (e) {
-      if (e) message.error(e);
+      const err = JSON.stringify(e)
+      if (e) console.log(err);
     }
   },
 };
@@ -146,7 +151,7 @@ export const changeHospitalPlaces = {
         return response;
     } catch (e) {
       const err = JSON.stringify(e)
-      if(e) message.error(err)
+      if(e) message.error("Поля: ID отделения, количество коек - обязательны к заполнению")
     }
   },
 };
@@ -166,7 +171,9 @@ export const bunkReleaseAPI = {
       message.info(response.data);
       return response;
     } catch (e) {
-      if (e) message.error(e);
+      const err = JSON.stringify(e)
+      console.log(err)
+      if (e) message.error("Все койки в госпитале свободны");
     }
   },
 };
@@ -202,7 +209,8 @@ export const replaceAPI = {
       message.info(response.data);
       return response;
     } catch (e) {
-      if (e) message.error(e);
+      const err = JSON.stringify(e)
+      if (e) message.error("Вы пытаетесь освободить больше коек, чем сейчас занято");
     }
   },
 };

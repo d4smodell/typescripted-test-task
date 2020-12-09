@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Form, Radio, Select, Modal } from "antd";
+import { Button, Form, Radio, Select, Modal, message } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getInfo } from "../../../../context/reducers/authReducer";
 import { getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
@@ -24,11 +24,14 @@ export const ReplacePatients = (props) => {
       to_department_id: select,
       count: 1,
     };
-    dispatch(getInfo()).then(
-      replaceAPI.replacePatients(payload).then(
-        dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
-      )
-    )
+    dispatch(getInfo())
+    replaceAPI.replacePatients(payload)
+    .then(res => {
+      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+    })
+    .catch(err => {
+      if(err) message.error(err)
+    })
     form.resetFields();
     setVisible(false);
   };

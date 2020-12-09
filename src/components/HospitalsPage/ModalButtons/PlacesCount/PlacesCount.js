@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Modal, message, Input, Form, Button } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { getDepartmentsThunk, getSingleDepartmentThunk } from "../../../../context/reducers/departmentsReducer";
@@ -16,8 +16,9 @@ export const PlacesCount = (props) => {
 
   const showModal = () => {
     dispatch(getDepartmentsThunk())
-    .then(dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)))
-    .then(setVisible(true))
+    .then(res => dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)))
+    .then(res => setVisible(true))
+    .catch(err => err ? message.error(err) : null)
   };
 
   const error = () => {
@@ -50,9 +51,8 @@ export const PlacesCount = (props) => {
       count_male_o2_free,
     };
 
-    changeHospitalPlaces.changePlaces(payload).then(
-      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
-    );
+    changeHospitalPlaces.changePlaces(payload)
+    .then(res => dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)));
     setVisible(false);
   };
 
@@ -109,6 +109,17 @@ export const PlacesCount = (props) => {
     }
   };
 
+  const formValues = useMemo(() => ({
+      count_male_free: currentDepartment?.data?.count_male_free,
+      count_male_busy: currentDepartment?.data?.count_male_busy,
+      count_female_free: currentDepartment?.data?.count_female_free,
+      count_female_busy: currentDepartment?.data?.count_female_busy,
+      count_male_o2_free: currentDepartment?.data?.count_male_o2_free,
+      count_male_o2_busy: currentDepartment?.data?.count_male_o2_busy,
+      count_female_o2_free: currentDepartment?.data?.count_female_o2_free,
+      count_female_o2_busy: currentDepartment?.data?.count_female_o2_busy,
+  }), [currentDepartment?.data?.count_female_busy, currentDepartment?.data?.count_female_free, currentDepartment?.data?.count_female_o2_busy, currentDepartment?.data?.count_female_o2_free, currentDepartment?.data?.count_male_busy, currentDepartment?.data?.count_male_free, currentDepartment?.data?.count_male_o2_busy, currentDepartment?.data?.count_male_o2_free])
+
   return (
     <div className={"patients_button"}>
       <Button size={"large"} onClick={showModal}>
@@ -127,16 +138,7 @@ export const PlacesCount = (props) => {
             name="places_count"
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
-            initialValues={{
-              count_male_free: currentDepartment?.data?.count_male_free,
-              count_male_busy: currentDepartment?.data?.count_male_busy,
-              count_female_free: currentDepartment?.data?.count_female_free,
-              count_female_busy: currentDepartment?.data?.count_female_busy,
-              count_male_o2_free: currentDepartment?.data?.count_male_o2_free,
-              count_male_o2_busy: currentDepartment?.data?.count_male_o2_busy,
-              count_female_o2_free: currentDepartment?.data?.count_female_o2_free,
-              count_female_o2_busy: currentDepartment?.data?.count_female_o2_busy,
-            }}
+            initialValues={formValues}
           >
             <h3>Мужские</h3>
             <div className={"places_settings"}>
@@ -149,7 +151,7 @@ export const PlacesCount = (props) => {
                       validator: maleValidation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_male_free} />
+                    <Input />
                   </Form.Item>
                 </div>
               </div>
@@ -162,7 +164,7 @@ export const PlacesCount = (props) => {
                       validator: maleValidation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_male_busy} />
+                    <Input />
                   </Form.Item>
                 </div>
               </div>

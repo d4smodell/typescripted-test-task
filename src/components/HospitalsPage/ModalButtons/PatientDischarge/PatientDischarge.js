@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button } from "antd";
+import { Form, Button, message } from "antd";
 import { Modal } from "antd";
 import { Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,8 +26,9 @@ export const PatientDischarge = (props) => {
 
   const onFinish = (values) => {
     bunkReleaseAPI.releaseBunk(values.radio.sex, values.radio.has_oxygen, values.radio.department_id)
-    // dispatch(discharge(values.radio.sex, values.radio.has_oxygen, values.radio.department_id))
-    .then(dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)))
+    .then(res => {
+      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+    })
     form.resetFields()
     setVisible(false);
   };

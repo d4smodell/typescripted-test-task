@@ -29,7 +29,9 @@ const CardWrapper = ({
           <Button
             onClick={() => {
               changeCountAPI.remove(departmentId, value, secValue, gender, hasOxygen)
-              .then(dispatch(getSingleDepartmentThunk(departmentId)))
+              .then(res => {
+                dispatch(getSingleDepartmentThunk(departmentId))
+              })
             }}
             size="large"
             type="primary"
@@ -53,7 +55,10 @@ const CardWrapper = ({
           <Button
             onClick={() => {
               changeCountAPI.add(departmentId, value, secValue, gender, hasOxygen)
-              .then(dispatch(getSingleDepartmentThunk(departmentId)))
+              .then(res => {
+                dispatch(getSingleDepartmentThunk(departmentId))
+                console.log(res)
+              })
             }}
             size="large"
             type="primary"

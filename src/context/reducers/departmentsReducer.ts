@@ -6,7 +6,7 @@ type ActionTypes = GetDepartmentsType | GetSingleDepartmentType
 
 type InitialStateType = {
     departments: Array<any> | null,
-    department: string | null
+    department: any | null
 }
 
 const initialState: InitialStateType = {
@@ -35,24 +35,26 @@ export const departmentsReducer = (state = initialState, action: ActionTypes): I
 
 type GetDepartmentsType = {
     type: typeof GET_DEPARTMENTS,
-    payload: Array<any>
+    payload: any
 }
 
-const getDepartments = (payload: Array<any>): GetDepartmentsType => ({ type: GET_DEPARTMENTS, payload })
+const getDepartments = (payload: any): GetDepartmentsType => ({ type: GET_DEPARTMENTS, payload })
 
 type GetSingleDepartmentType = {
     type: typeof GET_SINGLE_DEPARTMENT,
-    payload: string
+    payload: any
 }
 
-const getSingleDepartment = (payload: string): GetSingleDepartmentType => ({ type: GET_SINGLE_DEPARTMENT, payload })
+const getSingleDepartment = (payload: any): GetSingleDepartmentType => ({ type: GET_SINGLE_DEPARTMENT, payload })
 
 export const getDepartmentsThunk = () => async (dispatch: Dispatch<GetDepartmentsType>) => {
     const response = await departmentsAPI.getDepartments()
-    dispatch(getDepartments(response))
+    console.log(response)
+    dispatch(getDepartments(response.data))
 }
 
 export const getSingleDepartmentThunk = (departmentId: number) => async (dispatch: Dispatch<GetSingleDepartmentType>) => {
     const response = await departmentsAPI.getSingleDepartment(departmentId)
-    dispatch(getSingleDepartment(response))
+    console.log(response)
+    dispatch(getSingleDepartment(response.data))
 }

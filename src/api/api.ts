@@ -11,7 +11,7 @@ const instance = Axios.create({
 });
 
 export const authAPI = {
-  async login(username, password) {
+  async login(username: string, password: string) {
     try {
       const response = await instance.post(`api/users/token/`, {
         username,
@@ -97,7 +97,7 @@ export const departmentsAPI = {
     }
   },
 
-  async getSingleDepartment(departmentId) {
+  async getSingleDepartment(departmentId: number) {
     try {
       const response = await instance.get(
         `api/hospitals/departments/${departmentId}/`,
@@ -115,18 +115,30 @@ export const departmentsAPI = {
   },
 };
 
+type ChangeHospitalPlaces = {
+  department_id: number,
+  count_female_busy: number,
+  count_female_o2_busy: number,
+  count_female_free: number,
+  count_female_o2_free: number,
+  count_male_busy: number,
+  count_male_o2_busy: number,
+  count_male_free: number,
+  count_male_o2_free: number 
+}
+
 export const changeHospitalPlaces = {
-  async changePlaces({
-    department_id,
-    count_female_busy,
-    count_female_o2_busy,
-    count_female_free,
-    count_female_o2_free,
-    count_male_busy,
-    count_male_o2_busy,
-    count_male_free,
-    count_male_o2_free,
-  }) {
+  async changePlaces(payload: ChangeHospitalPlaces) {
+    const { 
+      department_id,
+      count_female_busy,
+      count_female_o2_busy,
+      count_female_free,
+      count_female_o2_free,
+      count_male_busy,
+      count_male_o2_busy,
+      count_male_free,
+      count_male_o2_free } = payload
     try {
         const response = await instance.post(
           `api/hospitals/bunks/multiple_change/`,
@@ -150,14 +162,13 @@ export const changeHospitalPlaces = {
         message.info(response.data);
         return response;
     } catch (e) {
-      const err = JSON.stringify(e)
       if(e) message.error("Поля: ID отделения, количество коек - обязательны к заполнению")
     }
   },
 };
 
 export const bunkReleaseAPI = {
-  async releaseBunk(sex, has_oxygen, department_id) {
+  async releaseBunk(sex: string, has_oxygen: boolean, department_id: number) {
     try {
       const response = await instance.post(
         "api/hospitals/bunks/release/",
@@ -178,16 +189,26 @@ export const bunkReleaseAPI = {
   },
 };
 
+type ReplacePatientsType = {
+    from_sex: string,
+    from_has_oxygen: boolean,
+    from_department_id: number,
+    to_sex: string,
+    to_has_oxygen: boolean,
+    to_department_id: number,
+    count: number
+}
+
 export const replaceAPI = {
-  async replacePatients({
-    from_sex,
-    from_has_oxygen,
-    from_department_id,
-    to_sex,
-    to_has_oxygen,
-    to_department_id,
-    count,
-  }) {
+  async replacePatients(payload: ReplacePatientsType) {
+    const {
+      from_sex,
+      from_has_oxygen,
+      from_department_id,
+      to_sex,
+      to_has_oxygen,
+      to_department_id,
+      count } = payload
     try {
       const response = await instance.post(
         "api/hospitals/bunks/transfer/",
@@ -209,14 +230,13 @@ export const replaceAPI = {
       message.info(response.data);
       return response;
     } catch (e) {
-      const err = JSON.stringify(e)
       if (e) message.error("Вы пытаетесь освободить больше коек, чем сейчас занято");
     }
   },
 };
 
 export const changeCountAPI = {
-  async add(department_id, busy_count, free_count, sex, has_oxygen) {
+  async add(department_id: number, busy_count: number, free_count: number, sex: string, has_oxygen: boolean) {
     const response = await instance.post(
       "api/hospitals/bunks/multiple_addition/",
       { department_id, busy_count, free_count, sex, has_oxygen },
@@ -229,7 +249,7 @@ export const changeCountAPI = {
     return response;
   },
 
-  async remove(department_id, busy_count, free_count, sex, has_oxygen) {
+  async remove(department_id: number, busy_count: number, free_count: number, sex: string, has_oxygen: boolean) {
     const response = await instance.post(
       "api/hospitals/bunks/multiple_deletion/",
       { department_id, busy_count, free_count, sex, has_oxygen },

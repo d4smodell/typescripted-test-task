@@ -5,7 +5,7 @@ import "./index.css";
 
 function App() {
   return (
-    <BrowserRouter className="App">
+    <BrowserRouter>
       <Switch>
         <Route exact path="/" render={() => <AuthorizationPage />} />
         <Route path="/hospitals" render={() => <Hospitals />} />

@@ -4,14 +4,23 @@ import {
   SET_USER_DATA,
 } from "../types";
 import { additionInfoAPI, authAPI } from "../../api/api";
+import { Dispatch } from "react";
 
-const initialState = {
+type ActionTypes = SetAuthType | GetAdditionalInfoType | ClearUserDataType
+
+type InitialState = {
+  username: string | null,
+  password: string | null,
+  info: string | null
+}
+
+const initialState: InitialState = {
   username: null,
   password: null,
   info: null,
 };
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state = initialState, action: ActionTypes): InitialState => {
   switch (action.type) {
     case SET_USER_DATA:
       return {
@@ -22,7 +31,7 @@ export const authReducer = (state = initialState, action) => {
     case GET_ADDITIONAL_INFO:
       return {
         ...state,
-        info: action.info,
+        info: action.payload,
       };
 
     case CLEAR_USER_DATA:
@@ -35,31 +44,45 @@ export const authReducer = (state = initialState, action) => {
   }
 };
 
-const setAuth = (username, password) => ({
+type SetAuthType = {
+  type: typeof SET_USER_DATA,
+  payload: { username: string, password: string }
+}
+
+const setAuth = (username: string, password: string): SetAuthType => ({
   type: SET_USER_DATA,
   payload: { username, password },
 });
 
-const clearUserData = () => ({
+type ClearUserDataType = {
+  type: typeof CLEAR_USER_DATA
+}
+
+const clearUserData = (): ClearUserDataType => ({
   type: CLEAR_USER_DATA,
 });
 
-const getAdditionalInfo = (payload) => ({
+type GetAdditionalInfoType = {
+  type: typeof GET_ADDITIONAL_INFO,
+  payload: string
+} 
+
+const getAdditionalInfo = (payload: string): GetAdditionalInfoType => ({
   type: GET_ADDITIONAL_INFO,
-  info: payload,
+  payload,
 });
 
-export const getInfo = () => async (dispatch) => {
+export const getInfo = () => async (dispatch: Dispatch<GetAdditionalInfoType>) => {
   const response = await additionInfoAPI.getAdditionInfo();
   dispatch(getAdditionalInfo(response));
 };
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch: Dispatch<any>) => {
   localStorage.clear();
   dispatch(clearUserData());
 };
 
-export const login = (username, password) => async (dispatch) => {
+export const login = (username: string, password: string) => async (dispatch: Dispatch<SetAuthType>) => {
   try {
     let response = await authAPI.login(username, password);
     dispatch(setAuth(username, password));

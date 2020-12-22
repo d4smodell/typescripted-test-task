@@ -4,7 +4,7 @@ import { PlacesCount } from "./PlacesCount/PlacesCount";
 import { ReplacePatients } from "./ReplacePatients/ReplacePatients";
 import { InfoModal } from "./InfoModal/InfoModal";
 
-export const ModalButtons = (props) => {
+export const ModalButtons = () => {
   return (
     <div className={"patients_container"}>
       <div style={{flexWrap: 'wrap'}} className={"patients_actions"}>

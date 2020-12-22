@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, message } from "antd";
+import { Form, Button } from "antd";
 import { Modal } from "antd";
 import { Radio } from "antd";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,9 +7,13 @@ import { getSingleDepartmentThunk } from "../../../../context/reducers/departmen
 import { bunkReleaseAPI } from "../../../../api/api";
 import "./PatientsDischarge.css";
 
-export const PatientDischarge = (props) => {
+type PatientDischargePropsType = {
+  title: string
+}
+
+export const PatientDischarge = (props: PatientDischargePropsType) => {
   const [visible, setVisible] = React.useState(false);
-  const currentDepartment = useSelector(state => state.departments.department);
+  const currentDepartment = useSelector((state: any) => state.departments.department);
 
   const [form] = Form.useForm();
 
@@ -24,10 +28,10 @@ export const PatientDischarge = (props) => {
     setVisible(false);
   };
 
-  const onFinish = (values) => {
+  const onFinish = (values: any) => {
     bunkReleaseAPI.releaseBunk(values.radio.sex, values.radio.has_oxygen, values.radio.department_id)
     .then(res => {
-      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+      dispatch(getSingleDepartmentThunk(currentDepartment?.id))
     })
     form.resetFields()
     setVisible(false);
@@ -57,7 +61,7 @@ export const PatientDischarge = (props) => {
                       value={{
                         sex: "MALE",
                         has_oxygen: false,
-                        department_id: currentDepartment?.data?.id,
+                        department_id: currentDepartment?.id,
                       }}
                     >
                       Мужчина
@@ -66,7 +70,7 @@ export const PatientDischarge = (props) => {
                       value={{
                         sex: "FEMALE",
                         has_oxygen: false,
-                        department_id: currentDepartment?.data?.id,
+                        department_id: currentDepartment?.id,
                       }}
                     >
                       Женщина
@@ -75,7 +79,7 @@ export const PatientDischarge = (props) => {
                       value={{
                         sex: "MALE",
                         has_oxygen: true,
-                        department_id: currentDepartment?.data?.id,
+                        department_id: currentDepartment?.id,
                       }}
                     >
                       Мужчина с кислородом
@@ -84,7 +88,7 @@ export const PatientDischarge = (props) => {
                       value={{
                         sex: "FEMALE",
                         has_oxygen: true,
-                        department_id: currentDepartment?.data?.id,
+                        department_id: currentDepartment?.id,
                       }}
                     >
                       Женщина с кислородом

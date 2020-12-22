@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import "./AuthForm.css";
 
-export const ButtonWrapper = props => {
+export const ButtonWrapper = () => {
   return (
     <div className={"ButtonWrapper"}>
       <Button

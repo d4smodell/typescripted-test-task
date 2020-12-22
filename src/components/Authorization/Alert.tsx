@@ -2,7 +2,7 @@ import { Alert } from "antd";
 import './AuthForm.css'
 
 export const AlertWrapper = () => {
-    const onClose = (e) => {
+    const onClose = (e: string) => {
       console.log(e, "I was closed.");
     };
     return <div className={'AlertWrapper'}>
@@ -11,7 +11,6 @@ export const AlertWrapper = () => {
         description="Пожалуйста проверьте правильность введенных данных и повторите попытку"
         type="error"
         closable
-        onClose={onClose}
       />
     </div>
   }

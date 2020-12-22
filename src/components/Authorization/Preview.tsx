@@ -3,7 +3,7 @@ import emblem from "../Images/emblem_tyumen.png";
 import logo from "../Images/itslogo.png";
 import './AuthForm.css'
 
-export const Preview = (props) => {
+export const Preview = () => {
   return (
     <>
       <div className={"Preview"}>

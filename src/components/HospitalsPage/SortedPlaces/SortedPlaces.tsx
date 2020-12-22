@@ -7,18 +7,32 @@ import { getSingleDepartmentThunk } from "../../../context/reducers/departmentsR
 import { changeCountAPI } from "../../../api/api";
 import "./SortedPlaces.css";
 
-const CardWrapper = ({
-  departmentId,
-  busyPercent,
-  free,
-  total,
-  title,
-  value,
-  secValue,
-  gender,
-  hasOxygen,
-  busy,
-}) => {
+type CardWrapperPropsType = {
+  departmentId: number,
+  busyPercent: number,
+  free: number,
+  total: number,
+  title: string,
+  value: number,
+  secValue: number,
+  gender: string,
+  hasOxygen: boolean,
+  busy: boolean,
+}
+
+const CardWrapper = (props: CardWrapperPropsType) => {
+  const {
+    departmentId,
+    busyPercent,
+    free,
+    total,
+    title,
+    value,
+    secValue,
+    gender,
+    hasOxygen,
+    busy,
+  } = props
   const dispatch = useDispatch();
 
   return (
@@ -82,63 +96,63 @@ const CardWrapper = ({
   );
 };
 
-export const SortedPlaces = (props) => {
-  const placesCount = useSelector((state) => state.departments.department);
+export const SortedPlaces = () => {
+  const placesCount = useSelector((state: any) => state.departments.department);
 
-  const maleFree = placesCount?.data?.count_male_free;
-  const maleBusy = placesCount?.data?.count_male_busy;
+  const maleFree = placesCount?.count_male_free;
+  const maleBusy = placesCount?.count_male_busy;
   const maleTotal =
-    placesCount?.data?.count_male_free + placesCount?.data?.count_male_busy;
+    placesCount?.count_male_free + placesCount?.count_male_busy;
 
-  const femaleFree = placesCount?.data?.count_female_free;
-  const femaleBusy = placesCount?.data?.count_female_busy;
+  const femaleFree = placesCount?.count_female_free;
+  const femaleBusy = placesCount?.count_female_busy;
   const femaleTotal =
-    placesCount?.data?.count_female_free + placesCount?.data?.count_female_busy;
+    placesCount?.count_female_free + placesCount?.count_female_busy;
 
-  const maleO2Free = placesCount?.data?.count_male_o2_free;
-  const maleO2Busy = placesCount?.data?.count_male_o2_busy;
+  const maleO2Free = placesCount?.count_male_o2_free;
+  const maleO2Busy = placesCount?.count_male_o2_busy;
   const maleO2Total =
-    placesCount?.data?.count_male_o2_free +
-    placesCount?.data?.count_male_o2_busy;
+    placesCount?.count_male_o2_free +
+    placesCount?.count_male_o2_busy;
 
-  const femaleO2Free = placesCount?.data?.count_female_o2_free;
-  const femaleO2Busy = placesCount?.data?.count_female_o2_busy;
+  const femaleO2Free = placesCount?.count_female_o2_free;
+  const femaleO2Busy = placesCount?.count_female_o2_busy;
   const femaleO2Total =
-    placesCount?.data?.count_female_o2_free +
-    placesCount?.data?.count_female_o2_busy;
+    placesCount?.count_female_o2_free +
+    placesCount?.count_female_o2_busy;
 
   const maleBusyPercent = Math.ceil(
-    (placesCount?.data?.count_male_busy /
-      (placesCount?.data?.count_male_busy +
-        placesCount?.data?.count_male_free)) *
+    (placesCount?.count_male_busy /
+      (placesCount?.count_male_busy +
+        placesCount?.count_male_free)) *
       100
   );
 
   const femaleBusyPercent = Math.ceil(
-    (placesCount?.data?.count_female_busy /
-      (placesCount?.data?.count_female_busy +
-        placesCount?.data?.count_female_free)) *
+    (placesCount?.count_female_busy /
+      (placesCount?.count_female_busy +
+        placesCount?.count_female_free)) *
       100
   );
 
   const maleO2BusyPercent = Math.ceil(
-    (placesCount?.data?.count_male_o2_busy /
-      (placesCount?.data?.count_male_o2_busy +
-        placesCount?.data?.count_male_o2_free)) *
+    (placesCount?.count_male_o2_busy /
+      (placesCount?.count_male_o2_busy +
+        placesCount?.count_male_o2_free)) *
       100
   );
 
   const femaleO2BusyPercent = Math.ceil(
-    (placesCount?.data?.count_female_o2_busy /
-      (placesCount?.data?.count_female_o2_busy +
-        placesCount?.data?.count_female_o2_free)) *
+    (placesCount?.count_female_o2_busy /
+      (placesCount?.count_female_o2_busy +
+        placesCount?.count_female_o2_free)) *
       100
   );
 
   return (
     <div className={"card_container"}>
       <CardWrapper
-        departmentId={placesCount?.data?.id}
+        departmentId={placesCount?.id}
         busyPercent={maleBusyPercent}
         free={maleFree}
         total={maleTotal}
@@ -151,7 +165,7 @@ export const SortedPlaces = (props) => {
       />
 
       <CardWrapper
-        departmentId={placesCount?.data?.id}
+        departmentId={placesCount?.id}
         busyPercent={femaleBusyPercent}
         free={femaleFree}
         total={femaleTotal}
@@ -164,7 +178,7 @@ export const SortedPlaces = (props) => {
       />
 
       <CardWrapper
-        departmentId={placesCount?.data?.id}
+        departmentId={placesCount?.id}
         busyPercent={maleO2BusyPercent}
         free={maleO2Free}
         total={maleO2Total}
@@ -177,7 +191,7 @@ export const SortedPlaces = (props) => {
       />
 
       <CardWrapper
-        departmentId={placesCount?.data?.id}
+        departmentId={placesCount?.id}
         busyPercent={femaleO2BusyPercent}
         free={femaleO2Free}
         total={femaleO2Total}

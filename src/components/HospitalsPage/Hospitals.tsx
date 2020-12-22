@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { logout } from "../../context/reducers/authReducer";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Header } from "./Header/Header";
 import { PlacesInfo } from "./PlacesInfo/PlacesInfo";
 import { ModalButtons } from "./ModalButtons/ModalButtons";
@@ -10,10 +10,10 @@ import { Spin } from "antd";
 import { getDepartmentsThunk, getSingleDepartmentThunk } from "../../context/reducers/departmentsReducer";
 import "./Content.css";
 
-const Hospitals = (props) => {
-  const currentDepartment = useSelector(state => state.departments.department);
-  const departments = useSelector(state => state.departments.departments)
-  const [spin, setSpin] = useState(false)
+const Hospitals = () => {
+  const currentDepartment = useSelector((state: any) => state.departments.department);
+  const departments = useSelector((state: any) => state.departments.departments)
+  const [, setSpin] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -22,12 +22,12 @@ const Hospitals = (props) => {
   }, [dispatch])
 
   const handler = useCallback(() => {
-    if(departments?.data) {
-      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id || departments?.data[0].id));
+    if(departments) {
+      dispatch(getSingleDepartmentThunk(currentDepartment?.id || departments[0]?.id));
     } else {
       setSpin(true)
     }
-  }, [dispatch, currentDepartment?.data?.id, departments?.data]);
+  }, [currentDepartment?.id, departments, dispatch]);
 
   useEffect(() => {
     handler();
@@ -35,8 +35,8 @@ const Hospitals = (props) => {
 
   return (
     <>
-      <Header logout={props.logout} />
-      {departments?.data ? (
+      <Header logout={() => dispatch(logout)} />
+      {departments ? (
         <div className="container">
           <HospitalsLocation />
           <PlacesInfo />
@@ -56,8 +56,4 @@ const Hospitals = (props) => {
   );
 };
 
-const mapDispatchToProps = {
-  logout,
-};
-
-export default connect(null, mapDispatchToProps)(Hospitals);
+export default Hospitals

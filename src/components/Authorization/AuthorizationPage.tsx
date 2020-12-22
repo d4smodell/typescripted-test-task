@@ -2,7 +2,7 @@ import LoginForm from "./AuthForm";
 import "./AuthorizationPage.css";
 import { Preview } from "./Preview";
 
-const AuthorizationPage = (props) => {
+const AuthorizationPage = () => {
   return (
     <div className="authorization">
       <LoginForm />

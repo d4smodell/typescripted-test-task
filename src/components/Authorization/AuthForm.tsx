@@ -10,16 +10,21 @@ import { useHistory } from "react-router-dom";
 import { getSingleDepartmentThunk } from "../../context/reducers/departmentsReducer";
 import "./AuthForm.css";
 
-const LoginForm = (props) => {
+type LoginPayloadType = {
+  username: string,
+  password: string,
+}
+
+const LoginForm = (props: any) => {
   const [alert, setAlert] = useState(false);
 
   const history = useHistory();
 
   const dispatch = useDispatch()
 
-  const currentDepartment = useSelector(state => state.departments)
+  const currentDepartment = useSelector((state: any) => state.departments)
   
-  const onFinish = (payload) => {
+  const onFinish = (payload: LoginPayloadType) => {
     try {
       const { username } = localStorage;
       props.login(payload.username, payload.password);
@@ -27,7 +32,7 @@ const LoginForm = (props) => {
       if (username) {
         history.push("/hospitals");
       } 
-      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+      dispatch(getSingleDepartmentThunk(currentDepartment?.id))
     } catch(e) {
       if(e) {
         setAlert(true);

@@ -6,15 +6,20 @@ import { getSingleDepartmentThunk } from "../../../../context/reducers/departmen
 import { replaceAPI } from "../../../../api/api";
 import "./ReplacePatients.css";
 
-export const ReplacePatients = (props) => {
+type ReplacePatientsPropsType = {
+  title: string
+}
+
+export const ReplacePatients = (props: ReplacePatientsPropsType) => {
   const [form] = Form.useForm();
   const { Option } = Select;
   const [visible, setVisible] = useState(false);
-  const departments = useSelector((state) => state.departments.departments);
-  const info = departments?.data;
+  const departments = useSelector((state: any) => state.departments.departments);
+  const info = departments;
   const dispatch = useDispatch();
 
-  const onFinish = ({ radio, radio_second, select }) => {
+  const onFinish = (props: any) => {
+    const { radio, radio_second, select } = props
     const payload = {
       from_sex: radio.from_sex,
       from_has_oxygen: radio.from_has_oxygen,
@@ -26,8 +31,8 @@ export const ReplacePatients = (props) => {
     };
     dispatch(getInfo())
     replaceAPI.replacePatients(payload)
-    .then(res => {
-      dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id))
+    .then(() => {
+      dispatch(getSingleDepartmentThunk(currentDepartment?.id))
     })
     .catch(err => {
       if(err) message.error(err)
@@ -46,7 +51,7 @@ export const ReplacePatients = (props) => {
   };
 
   const currentDepartment = useSelector(
-    (state) => state.departments.department
+    (state: any) => state.departments.department
   );
 
   return (
@@ -72,7 +77,7 @@ export const ReplacePatients = (props) => {
                     value={{
                       from_sex: "MALE",
                       from_has_oxygen: false,
-                      from_department_id: currentDepartment?.data?.id,
+                      from_department_id: currentDepartment?.id,
                     }}
                   >
                     Мужчина
@@ -81,7 +86,7 @@ export const ReplacePatients = (props) => {
                     value={{
                       from_sex: "FEMALE",
                       from_has_oxygen: false,
-                      from_department_id: currentDepartment?.data?.id,
+                      from_department_id: currentDepartment?.id,
                     }}
                   >
                     Женщина
@@ -90,7 +95,7 @@ export const ReplacePatients = (props) => {
                     value={{
                       from_sex: "MALE",
                       from_has_oxygen: true,
-                      from_department_id: currentDepartment?.data?.id,
+                      from_department_id: currentDepartment?.id,
                     }}
                   >
                     Мужчина с кислородом
@@ -99,7 +104,7 @@ export const ReplacePatients = (props) => {
                     value={{
                       from_sex: "FEMALE",
                       from_has_oxygen: true,
-                      from_department_id: currentDepartment?.data?.id,
+                      from_department_id: currentDepartment?.id,
                     }}
                   >
                     Женщина с кислородом
@@ -119,7 +124,7 @@ export const ReplacePatients = (props) => {
                 ]}
               >
                 <Select placeholder="Выберите отделение">
-                  {info?.map((item) => {
+                  {info?.map((item: any) => {
                     return (
                       <Option key={item.id} value={item.id}>
                         {item.name}

@@ -5,14 +5,18 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import "./InfoModal.css";
 
-export const InfoModal = (props) => {
-  const otherDepartment = useSelector((state) => state.departments.departments);
+type InfoModalPropsType = {
+  title: string
+}
+
+export const InfoModal = (props: InfoModalPropsType) => {
+  const otherDepartment = useSelector((state: any) => state.departments.departments);
   const currentDepartment = useSelector(
-    (state) => state.departments.department
+    (state: any) => state.departments.department
   );
 
-  const filtered = otherDepartment?.data?.filter(
-    (item) => item.id !== currentDepartment?.data?.id
+  const filtered = otherDepartment?.filter(
+    (item: any) => item.id !== currentDepartment?.id 
   );
 
   const [visible, setVisible] = React.useState(false);
@@ -47,7 +51,7 @@ export const InfoModal = (props) => {
             <Button onClick={handleOk}>Закрыть</Button>
           ]}
         >
-          {filtered?.map((item) => {
+          {filtered?.map((item: any) => {
             return (
               <div style={{ margin: "0 auto" }} key={item?.id}>
                 <h1>{item?.name}</h1>

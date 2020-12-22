@@ -16,7 +16,7 @@ export const PlacesCount = (props) => {
 
   const showModal = () => {
     dispatch(getDepartmentsThunk())
-    .then(res => dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)))
+    .then(res => dispatch(getSingleDepartmentThunk(currentDepartment?.id)))
     .then(res => setVisible(true))
     .catch(err => err ? message.error(err) : null)
   };
@@ -40,7 +40,7 @@ export const PlacesCount = (props) => {
     count_male_o2_free,
   }) => {
     const payload = {
-      department_id: currentDepartment?.data?.id,
+      department_id: currentDepartment?.id,
       count_female_busy,
       count_female_o2_busy,
       count_female_free,
@@ -52,7 +52,7 @@ export const PlacesCount = (props) => {
     };
 
     changeHospitalPlaces.changePlaces(payload)
-    .then(res => dispatch(getSingleDepartmentThunk(currentDepartment?.data?.id)));
+    .then(res => dispatch(getSingleDepartmentThunk(currentDepartment?.id)));
     setVisible(false);
   };
 
@@ -64,8 +64,8 @@ export const PlacesCount = (props) => {
   const maleValidation = (rule, value, callback) => {
     if (
       value >
-      currentDepartment?.data?.count_male_busy +
-      currentDepartment?.data?.count_male_free
+      currentDepartment?.count_male_busy +
+      currentDepartment?.count_male_free
     ) {
       message.error("Неверное значение!");
     } else {
@@ -76,8 +76,8 @@ export const PlacesCount = (props) => {
   const femaleValidation = (rule, value, callback) => {
     if (
       value >
-      currentDepartment?.data?.count_female_busy +
-      currentDepartment?.data?.count_female_free
+      currentDepartment?.count_female_busy +
+      currentDepartment?.count_female_free
     ) {
       message.error("Неверное значение!");
     } else {
@@ -88,8 +88,8 @@ export const PlacesCount = (props) => {
   const maleO2Validation = (rule, value, callback) => {
     if (
       value >
-      currentDepartment?.data?.count_male_o2_busy +
-      currentDepartment?.data?.count_male_o2_free
+      currentDepartment?.count_male_o2_busy +
+      currentDepartment?.count_male_o2_free
     ) {
       message.error("Неверное значение!");
     } else {
@@ -100,8 +100,8 @@ export const PlacesCount = (props) => {
   const femaleO2Validation = (rule, value, callback) => {
     if (
       value >
-      currentDepartment?.data?.count_female_o2_busy +
-      currentDepartment?.data?.count_female_o2_free
+      currentDepartment?.count_female_o2_busy +
+      currentDepartment?.count_female_o2_free
     ) {
       message.error("Неверное значение!");
     } else {
@@ -110,15 +110,15 @@ export const PlacesCount = (props) => {
   };
 
   const formValues = useMemo(() => ({
-      count_male_free: currentDepartment?.data?.count_male_free,
-      count_male_busy: currentDepartment?.data?.count_male_busy,
-      count_female_free: currentDepartment?.data?.count_female_free,
-      count_female_busy: currentDepartment?.data?.count_female_busy,
-      count_male_o2_free: currentDepartment?.data?.count_male_o2_free,
-      count_male_o2_busy: currentDepartment?.data?.count_male_o2_busy,
-      count_female_o2_free: currentDepartment?.data?.count_female_o2_free,
-      count_female_o2_busy: currentDepartment?.data?.count_female_o2_busy,
-  }), [currentDepartment?.data?.count_female_busy, currentDepartment?.data?.count_female_free, currentDepartment?.data?.count_female_o2_busy, currentDepartment?.data?.count_female_o2_free, currentDepartment?.data?.count_male_busy, currentDepartment?.data?.count_male_free, currentDepartment?.data?.count_male_o2_busy, currentDepartment?.data?.count_male_o2_free])
+      count_male_free: currentDepartment?.count_male_free,
+      count_male_busy: currentDepartment?.count_male_busy,
+      count_female_free: currentDepartment?.count_female_free,
+      count_female_busy: currentDepartment?.count_female_busy,
+      count_male_o2_free: currentDepartment?.count_male_o2_free,
+      count_male_o2_busy: currentDepartment?.count_male_o2_busy,
+      count_female_o2_free: currentDepartment?.count_female_o2_free,
+      count_female_o2_busy: currentDepartment?.count_female_o2_busy,
+  }), [currentDepartment?.count_female_busy, currentDepartment?.count_female_free, currentDepartment?.count_female_o2_busy, currentDepartment?.count_female_o2_free, currentDepartment?.count_male_busy, currentDepartment?.count_male_free, currentDepartment?.count_male_o2_busy, currentDepartment?.count_male_o2_free])
 
   return (
     <div className={"patients_button"}>
@@ -181,7 +181,7 @@ export const PlacesCount = (props) => {
                       validator: femaleValidation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_female_free} />
+                    <Input defaultValue={currentDepartment?.count_female_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -194,7 +194,7 @@ export const PlacesCount = (props) => {
                       validator: femaleValidation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_female_busy} />
+                    <Input defaultValue={currentDepartment?.count_female_busy} />
                   </Form.Item>
                 </div>
               </div>
@@ -211,7 +211,7 @@ export const PlacesCount = (props) => {
                       validator: maleO2Validation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_male_o2_free} />
+                    <Input defaultValue={currentDepartment?.count_male_o2_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -224,7 +224,7 @@ export const PlacesCount = (props) => {
                       validator: maleO2Validation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_male_o2_busy} />
+                    <Input defaultValue={currentDepartment?.count_male_o2_busy} />
                   </Form.Item>
                 </div>
               </div>
@@ -241,7 +241,7 @@ export const PlacesCount = (props) => {
                       validator: femaleO2Validation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_female_o2_free} />
+                    <Input defaultValue={currentDepartment?.count_female_o2_free} />
                   </Form.Item>
                 </div>
               </div>
@@ -254,7 +254,7 @@ export const PlacesCount = (props) => {
                       validator: femaleO2Validation
                     }]}
                   >
-                    <Input defaultValue={currentDepartment?.data?.count_female_o2_busy} />
+                    <Input defaultValue={currentDepartment?.count_female_o2_busy} />
                   </Form.Item>
                 </div>
               </div>

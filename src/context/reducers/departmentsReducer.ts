@@ -1,12 +1,13 @@
-import { Dispatch } from "react"
+import { ThunkAction } from "redux-thunk"
 import { departmentsAPI } from "../../api/api"
 import { GET_DEPARTMENTS, GET_SINGLE_DEPARTMENT } from "../types"
+import { IRootState } from "./rootReducer"
 
 type ActionTypes = GetDepartmentsType | GetSingleDepartmentType
 
 type InitialStateType = {
-    departments: Array<any> | null,
-    department: any | null
+    departments: Array<number | string>,
+    department: Array<number | string> | null
 }
 
 const initialState: InitialStateType = {
@@ -33,28 +34,29 @@ export const departmentsReducer = (state = initialState, action: ActionTypes): I
     }
 }
 
+export type ThunkType = ThunkAction<void, IRootState, unknown, ActionTypes>
+
 type GetDepartmentsType = {
     type: typeof GET_DEPARTMENTS,
-    payload: any
+    payload: Array<number | string>
 }
 
-const getDepartments = (payload: any): GetDepartmentsType => ({ type: GET_DEPARTMENTS, payload })
+const getDepartments = (payload: Array<number | string>): GetDepartmentsType => ({ type: GET_DEPARTMENTS, payload })
 
 type GetSingleDepartmentType = {
     type: typeof GET_SINGLE_DEPARTMENT,
-    payload: any
+    payload: Array<number | string>
 }
 
-const getSingleDepartment = (payload: any): GetSingleDepartmentType => ({ type: GET_SINGLE_DEPARTMENT, payload })
+const getSingleDepartment = (payload: Array<number | string>): GetSingleDepartmentType => ({ type: GET_SINGLE_DEPARTMENT, payload })
 
-export const getDepartmentsThunk = () => async (dispatch: Dispatch<GetDepartmentsType>) => {
+export const getDepartmentsThunk = (): ThunkType => async (dispatch) => {
     const response = await departmentsAPI.getDepartments()
-    console.log(response)
-    dispatch(getDepartments(response.data))
+    dispatch(getDepartments(response?.data))
 }
 
-export const getSingleDepartmentThunk = (departmentId: number) => async (dispatch: Dispatch<GetSingleDepartmentType>) => {
+export const getSingleDepartmentThunk = (departmentId: number): ThunkType => async (dispatch) => {
     const response = await departmentsAPI.getSingleDepartment(departmentId)
     console.log(response)
-    dispatch(getSingleDepartment(response.data))
+    dispatch(getSingleDepartment(response))
 }

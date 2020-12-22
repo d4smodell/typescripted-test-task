@@ -10,7 +10,7 @@ import "../Content.css";
 export const HospitalsLocation = (props) => {
   const singleDepartment = useSelector((state) => state.departments.department);
   const departments = useSelector(state => state.departments.departments)
-  const info = departments?.data
+  const info = departments
 
   const dispatch = useDispatch();
 
@@ -29,13 +29,13 @@ export const HospitalsLocation = (props) => {
       </div>
     );
   };
-
+ 
   return (
     <div className={"container"}>
       <div className={"info_els"}>
         <Dropdown overlay={menu} info={info}>
           <a className="ant-dropdown-link" onClick={(e) => e.preventDefault()}>
-            {singleDepartment?.data?.name} <DownOutlined />
+            {singleDepartment?.name} <DownOutlined />
           </a>
         </Dropdown>
         <div className={"hospital__location"}>

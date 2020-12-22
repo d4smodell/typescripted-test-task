@@ -5,13 +5,15 @@ import {
 } from "../types";
 import { additionInfoAPI, authAPI } from "../../api/api";
 import { Dispatch } from "react";
+import { ThunkAction } from "redux-thunk";
+import { IRootState } from "./rootReducer";
 
 type ActionTypes = SetAuthType | GetAdditionalInfoType | ClearUserDataType
 
 type InitialState = {
   username: string | null,
   password: string | null,
-  info: string | null
+  info: any | null
 }
 
 const initialState: InitialState = {
@@ -67,13 +69,16 @@ type GetAdditionalInfoType = {
   payload: string
 } 
 
-const getAdditionalInfo = (payload: string): GetAdditionalInfoType => ({
+const getAdditionalInfo = (payload: any): GetAdditionalInfoType => ({
   type: GET_ADDITIONAL_INFO,
   payload,
 });
 
-export const getInfo = () => async (dispatch: Dispatch<GetAdditionalInfoType>) => {
+type ThunkType = ThunkAction<void, IRootState, unknown, ActionTypes>
+
+export const getInfo = (): ThunkType => async (dispatch) => {
   const response = await additionInfoAPI.getAdditionInfo();
+  console.log(response)
   dispatch(getAdditionalInfo(response));
 };
 
